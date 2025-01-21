@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmfi1lalc6i3l"]
+
+[ext_resource type="Script" uid="uid://28pt3snles3s" path="res://Scenes/Player/player.gd" id="1_uvnfx"]
+[ext_resource type="Script" uid="uid://cbd67wo4f23de" path="res://Scenes/Player/player_inputs.gd" id="2_a3d8c"]
+[ext_resource type="Script" uid="uid://b0de1t6377kua" path="res://Scenes/Player/camera_controller.gd" id="2_xpcdj"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tugb3"]
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_player_inputs")]
+script = ExtResource("1_uvnfx")
+_player_inputs = NodePath("PlayerInputs")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_tugb3")
+
+[node name="Head" type="Node3D" parent="." node_paths=PackedStringArray("_player", "_camera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+script = ExtResource("2_xpcdj")
+mouse_x_sensitivity = 0.3
+mouse_y_sensitivity = 0.3
+mouse_acceleration = 20.0
+_player = NodePath("..")
+_camera = NodePath("Camera3D")
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+
+[node name="PlayerInputs" type="Node3D" parent="."]
+script = ExtResource("2_a3d8c")
