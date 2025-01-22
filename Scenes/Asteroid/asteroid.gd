@@ -8,9 +8,13 @@ var _game : Game
 
 @export var _completion_cooldown : Timer
 @export var _animation_player : AnimationPlayer
+@export var _bubble_particles : GPUParticles3D
 
 # Signals
 signal amount_needed_changed(amount_needed)
+
+func emit_bubbles():
+	_bubble_particles.emitting = true
 
 func initialize_amount_needed(time):
 	if _game:
