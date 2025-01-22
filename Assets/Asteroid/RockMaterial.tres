@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://c5lkm3r540jxx"]
+
+[ext_resource type="Texture2D" uid="uid://c7vv2sosbp4ex" path="res://Assets/Asteroid/rock.jpg" id="1_131mn"]
+
+[resource]
+resource_name = "RockMaterial"
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_131mn")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.0

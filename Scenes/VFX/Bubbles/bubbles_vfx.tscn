@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://d3t03ohoukenl"]
+
+[ext_resource type="Script" uid="uid://bmhwagc0fddq6" path="res://Scenes/VFX/Bubbles/bubbles_vfx.gd" id="1_qqo5o"]
+[ext_resource type="Texture2D" uid="uid://d20soku8nwg43" path="res://Assets/Bubble/bubble.png" id="1_ylcr4"]
+
+[sub_resource type="Curve" id="Curve_qqo5o"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.166667, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ul83u"]
+curve = SubResource("Curve_qqo5o")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qqo5o"]
+inherit_velocity_ratio = 2.0
+velocity_pivot = Vector3(0, 1, 0)
+direction = Vector3(0, 0, -5)
+spread = 10.0
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+gravity = Vector3(0, 3, 0)
+linear_accel_min = 0.999998
+linear_accel_max = 30.0
+scale_min = 0.1
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_ul83u")
+scale_over_velocity_max = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ul83u"]
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("1_ylcr4")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_mgfbu"]
+material = SubResource("StandardMaterial3D_ul83u")
+
+[node name="BubblesVFX" type="Node3D"]
+script = ExtResource("1_qqo5o")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+unique_name_in_owner = true
+amount = 10
+explosiveness = 0.2
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_qqo5o")
+draw_pass_1 = SubResource("QuadMesh_mgfbu")

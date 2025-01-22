@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://b7i74urpbvylu"]
+[gd_scene load_steps=8 format=3 uid="uid://b7i74urpbvylu"]
 
 [ext_resource type="Texture2D" uid="uid://dm2u6xyxb30se" path="res://addons/kenney_prototype_textures/dark/texture_07.png" id="1_kl4rp"]
+[ext_resource type="PackedScene" uid="uid://b0nth2thtgpkm" path="res://Scenes/Asteroid/asteroid.tscn" id="2_syeop"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_syeop"]
 albedo_texture = ExtResource("1_kl4rp")
@@ -31,11 +32,13 @@ shape = SubResource("BoxShape3D_kl4rp")
 transform = Transform3D(1, 0, 0, 0, 0.517997, 0.855382, 0, -0.855382, 0.517997, 0, 3.74868, 0)
 
 [node name="Cube" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.14308, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.48134, 0.55, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Cube"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.53629, -0.165203, -2.92165)
 mesh = SubResource("BoxMesh_kl4rp")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cube"]
 shape = SubResource("BoxShape3D_syeop")
+
+[node name="Asteroid" parent="." instance=ExtResource("2_syeop")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -8.51997, 49.4055, -28.2333)

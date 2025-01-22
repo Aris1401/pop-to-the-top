@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvdjxbsguvaux"]
+
+[ext_resource type="Script" uid="uid://dyxjes4hyfrsr" path="res://Scenes/Bubble/bubble.gd" id="1_oh2l7"]
+
+[node name="Bubble" type="Node" node_paths=PackedStringArray("lifetime_timer")]
+script = ExtResource("1_oh2l7")
+lifetime_timer = NodePath("LifetimeTimer")
+
+[node name="LifetimeTimer" type="Timer" parent="."]

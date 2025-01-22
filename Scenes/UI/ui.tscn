@@ -1,8 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://b345bmt21ffk5"]
+[gd_scene load_steps=3 format=3 uid="uid://b345bmt21ffk5"]
 
 [ext_resource type="Texture2D" uid="uid://dbcglqwbo4cdy" path="res://Assets/Crosshair/crosshair.png" id="1_ahcct"]
+[ext_resource type="Script" uid="uid://bs3jwigq0yc2x" path="res://Scenes/UI/ui.gd" id="1_de23q"]
 
-[node name="UI" type="CanvasLayer"]
+[node name="UI" type="CanvasLayer" node_paths=PackedStringArray("_bubble_count")]
+script = ExtResource("1_de23q")
+_bubble_count = NodePath("PlayerInterface/MarginContainer/HBoxContainer/BubbleCount")
 
 [node name="PlayerInterface" type="Control" parent="."]
 layout_mode = 3
@@ -44,3 +47,24 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_ahcct")
 expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerInterface/MarginContainer"]
+layout_mode = 2
+
+[node name="BubbleCount" type="Label" parent="PlayerInterface/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "0"

@@ -1,0 +1,2 @@
+extends BubbleProducer
+class_name BubbleMaker
