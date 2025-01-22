@@ -1,11 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://b345bmt21ffk5"]
+[gd_scene load_steps=5 format=3 uid="uid://b345bmt21ffk5"]
 
 [ext_resource type="Texture2D" uid="uid://dbcglqwbo4cdy" path="res://Assets/Crosshair/crosshair.png" id="1_ahcct"]
 [ext_resource type="Script" uid="uid://bs3jwigq0yc2x" path="res://Scenes/UI/ui.gd" id="1_de23q"]
+[ext_resource type="Texture2D" uid="uid://byvvd8sgpjy5w" path="res://Assets/Kenney/bar_round_gloss_large_m.png" id="3_fo61o"]
+[ext_resource type="Texture2D" uid="uid://dw6t6a8qmel1x" path="res://Assets/Kenney/Green/Default/bar_round_gloss_large_m.png" id="4_alcrr"]
 
-[node name="UI" type="CanvasLayer" node_paths=PackedStringArray("_bubble_count")]
+[node name="UI" type="CanvasLayer" node_paths=PackedStringArray("_bubble_count", "_timer", "_bubble_amount_progress")]
 script = ExtResource("1_de23q")
-_bubble_count = NodePath("PlayerInterface/MarginContainer/HBoxContainer/BubbleCount")
+_bubble_count = NodePath("PlayerInterface/BubbleCount/HBoxContainer/BubbleCount")
+_timer = NodePath("PlayerInterface/Timer/VBoxContainer/Timer")
+_bubble_amount_progress = NodePath("PlayerInterface/Timer/VBoxContainer/MarginContainer/BubbleAmountProgress")
 
 [node name="PlayerInterface" type="Control" parent="."]
 layout_mode = 3
@@ -48,7 +52,7 @@ grow_vertical = 2
 texture = ExtResource("1_ahcct")
 expand_mode = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="PlayerInterface"]
+[node name="BubbleCount" type="MarginContainer" parent="PlayerInterface"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -60,11 +64,47 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PlayerInterface/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerInterface/BubbleCount"]
 layout_mode = 2
 
-[node name="BubbleCount" type="Label" parent="PlayerInterface/MarginContainer/HBoxContainer"]
+[node name="BubbleCount" type="Label" parent="PlayerInterface/BubbleCount/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 text = "0"
+
+[node name="Timer" type="MarginContainer" parent="PlayerInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerInterface/Timer"]
+layout_mode = 2
+
+[node name="Timer" type="Label" parent="PlayerInterface/Timer/VBoxContainer"]
+layout_mode = 2
+text = "00:00:00"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerInterface/Timer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_right = 60
+
+[node name="BubbleAmountProgress" type="TextureProgressBar" parent="PlayerInterface/Timer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+fill_mode = 6
+nine_patch_stretch = true
+stretch_margin_left = 5
+stretch_margin_top = 5
+stretch_margin_right = 5
+stretch_margin_bottom = 5
+texture_under = ExtResource("3_fo61o")
+texture_progress = ExtResource("4_alcrr")

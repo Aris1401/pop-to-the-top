@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=4 uid="uid://b0nth2thtgpkm"]
+[gd_scene load_steps=24 format=4 uid="uid://b0nth2thtgpkm"]
 
+[ext_resource type="Script" uid="uid://c8yrb7mxn3f32" path="res://Scenes/Asteroid/asteroid.gd" id="1_kk5yl"]
 [ext_resource type="Shader" uid="uid://bp55tvxh6thkd" path="res://Scenes/Asteroid/asteroid.tres" id="1_nknba"]
 [ext_resource type="Material" uid="uid://c5lkm3r540jxx" path="res://Assets/Asteroid/RockMaterial.tres" id="1_ov0aj"]
 [ext_resource type="Material" uid="uid://behtmitjcovtf" path="res://Assets/Asteroid/Vfx.tres" id="2_nknba"]
@@ -78,10 +79,219 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_onp06")
 
+[sub_resource type="Shader" id="Shader_kk5yl"]
+code = "// Available at: https://godotshaders.com/shader/distortion-bubble/
+
+shader_type spatial;
+
+render_mode unshaded;
+
+// fragment uniforms
+uniform float distortionView : hint_range(0.0, 0.3, 0.005) = 0.03;
+uniform float speedView : hint_range(0.0, 1.0, 0.005) = 0.5;
+uniform sampler2D noiseViewX;
+uniform sampler2D noiseViewY;
+uniform sampler2D screenTexture : hint_screen_texture;
+uniform vec3 tintColor : source_color;
+uniform float fesnelAmount : hint_range(0.0, 5.0, 0.1);
+
+// vertex uniforms
+uniform float distortionVertex : hint_range(0.0, 0.3, 0.005) = 0.03;
+uniform float speedVertex : hint_range(0.0, 1.0, 0.005) = 0.1;
+uniform sampler2D noiseVertex;
+
+
+float fresnel(float amount, vec3 normal, vec3 view)
+{
+	return pow((1.0 - clamp(dot(normalize(normal), normalize(view)), 0.0, 1.0 )), amount);
+}
+
+void vertex()
+{
+	float noiseVal = (texture(noiseVertex, UV + (TIME * speedVertex)).r * 2.0) - 1.0; // Range: -1.0 to 1.0
+	vec3 displacement = NORMAL * noiseVal * distortionVertex;
+	VERTEX = VERTEX + displacement;
+}
+
+void fragment() 
+{
+	float noiseValueX  = (texture(noiseViewX, UV + (TIME * speedView)).r * 2.0) - 1.0; // Range: -1.0 to 1.0
+	float noiseValueY  = (texture(noiseViewY, UV + (TIME * speedView)).r * 2.0) - 1.0; // Range: -1.0 to 1.0
+	vec2 noiseDistort = vec2(noiseValueX, noiseValueY) * distortionView;
+	vec3 distortedScreenTexture = vec3(texture(screenTexture, SCREEN_UV + noiseDistort).rgb);
+	vec3 fesnelTint = (tintColor * fresnel(fesnelAmount, NORMAL, VIEW));
+	
+	ALBEDO = distortedScreenTexture + fesnelTint;
+}"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8u528"]
+frequency = 0.0007
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_r5u2f"]
+seamless = true
+noise = SubResource("FastNoiseLite_8u528")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_d83li"]
+frequency = 0.0011
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2pmhh"]
+seamless = true
+noise = SubResource("FastNoiseLite_d83li")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bbbvq"]
+frequency = 0.0024
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_urh4d"]
+seamless = true
+noise = SubResource("FastNoiseLite_bbbvq")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r5u2f"]
+render_priority = 0
+shader = SubResource("Shader_kk5yl")
+shader_parameter/distortionView = 0.01
+shader_parameter/speedView = 0.2
+shader_parameter/noiseViewX = SubResource("NoiseTexture2D_2pmhh")
+shader_parameter/noiseViewY = SubResource("NoiseTexture2D_urh4d")
+shader_parameter/tintColor = Color(0.545619, 0.453334, 0.969685, 1)
+shader_parameter/fesnelAmount = 2.0
+shader_parameter/distortionVertex = 0.03
+shader_parameter/speedVertex = 0.1
+shader_parameter/noiseVertex = SubResource("NoiseTexture2D_r5u2f")
+
+[sub_resource type="SphereMesh" id="SphereMesh_kk5yl"]
+material = SubResource("ShaderMaterial_r5u2f")
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_kk5yl"]
 radius = 0.837766
 
-[node name="Asteroid" type="StaticBody3D"]
+[sub_resource type="Animation" id="Animation_kk5yl"]
+resource_name = "bubbled"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("asteroid/vfx:mesh:surface_0/material:next_pass:shader_parameter/HaloColor")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.646459, 0.16292, 0, 1), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("asteroid/bubble:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.5, 1.5, 1.5)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("asteroid/bubble:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_8u528"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("asteroid/vfx:mesh:surface_0/material:next_pass:shader_parameter/HaloColor")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.646459, 0.16292, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("asteroid/bubble:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3, 3, 3)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("asteroid/bubble:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_r5u2f"]
+resource_name = "popped"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("asteroid/vfx:mesh:surface_0/material:next_pass:shader_parameter/HaloColor")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0.646459, 0.16292, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("asteroid/bubble:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.5, 1.5, 1.5), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("asteroid/bubble:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d83li"]
+_data = {
+&"RESET": SubResource("Animation_8u528"),
+&"bubbled": SubResource("Animation_kk5yl"),
+&"popped": SubResource("Animation_r5u2f")
+}
+
+[node name="Asteroid" type="StaticBody3D" node_paths=PackedStringArray("_completion_cooldown", "_animation_player") groups=["Asteroid"]]
+script = ExtResource("1_kk5yl")
+_completion_cooldown = NodePath("CompletionCooldown")
+_animation_player = NodePath("AnimationPlayer")
 
 [node name="asteroid" type="Node3D" parent="."]
 
@@ -96,6 +306,18 @@ transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, 
 mesh = SubResource("ArrayMesh_xkmyf")
 skeleton = NodePath("")
 
+[node name="bubble" type="MeshInstance3D" parent="asteroid"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.519497, 0)
+mesh = SubResource("SphereMesh_kk5yl")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.556472, 0)
 shape = SubResource("SphereShape3D_kk5yl")
+
+[node name="CompletionCooldown" type="Timer" parent="."]
+wait_time = 30.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_d83li")
+}

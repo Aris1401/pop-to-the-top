@@ -6,14 +6,17 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8jp5c"]
 render_priority = 0
 shader = ExtResource("1_vi6lt")
+shader_parameter/HaloColor = Color(0.646459, 0.16292, 0, 1)
 shader_parameter/ScrollSpeed = 1.0
 shader_parameter/Texture2DParameter = ExtResource("2_4pe2b")
 
 [resource]
 resource_name = "Vfx"
 next_pass = SubResource("ShaderMaterial_8jp5c")
+transparency = 1
+cull_mode = 2
 vertex_color_use_as_albedo = true
-albedo_color = Color(0.906332, 0.906332, 0.906332, 1)
+albedo_color = Color(0.905882, 0.905882, 0.905882, 0)
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
 emission_energy_multiplier = 0.0

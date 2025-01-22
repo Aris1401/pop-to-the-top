@@ -24,10 +24,6 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _process(delta: float) -> void:
-	ImGui.Begin("Camera Controller")
-	ImGui.Text("Mouse movement: " + var_to_str(mouse_movement))
-	ImGui.End()
-	
 	if _player._player_inputs.ui_cancel:
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
