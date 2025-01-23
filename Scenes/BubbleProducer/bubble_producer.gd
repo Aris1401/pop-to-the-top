@@ -9,7 +9,6 @@ enum BubbleProducerState {
 	IDLE,
 	IMPOSSIBLE_STATE
 }
-
 var current_state : BubbleProducerState = BubbleProducerState.IDLE
 var last_state : BubbleProducerState
 
@@ -21,8 +20,7 @@ var last_state : BubbleProducerState
 @export var _rate_timer : Timer
 
 func produce():
-	if current_state == BubbleProducerState.IMPOSSIBLE_STATE:
-		change_state(BubbleProducerState.IDLE)
+	if check_for_impossible_state():
 		return
 	
 	if not _rate_timer.timeout.is_connected(_on_rate_timer_timeout):
@@ -38,7 +36,7 @@ func produce():
 	change_state(BubbleProducerState.PRODUCING)
 
 func end():
-	if current_state == BubbleProducerState.IDLE:
+	if current_state == BubbleProducerState.IDLE || current_state == BubbleProducerState.IMPOSSIBLE_STATE:
 		change_state(BubbleProducerState.IMPOSSIBLE_STATE)
 		return
 	
@@ -58,4 +56,10 @@ func _on_rate_timer_timeout():
 func change_state(state : BubbleProducerState):
 	last_state = current_state
 	current_state = state
+
+func check_for_impossible_state():
+	if current_state == BubbleProducerState.IMPOSSIBLE_STATE:
+		change_state(BubbleProducerState.IDLE)
+		return true
+	return false
 #endregion

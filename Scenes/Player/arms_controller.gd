@@ -25,6 +25,9 @@ func start_fire():
 	bubble_producer.produce()
 
 func _on_stopped_fire():
+	if _player._game.current_game_state == _player._game.GameStates.IN_SHOP:
+		return
+	
 	_player._animation_controller.set_condition("Movement", "stop_shooting", true)
 	_player._animation_controller.set_condition("Movement", "is_shooting", false)
 	
