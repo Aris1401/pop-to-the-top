@@ -7,6 +7,13 @@ class_name UI
 
 @export var _bubble_amount_progress : TextureProgressBar
 
+# Machine shop
+@export var _machine_shop : MachineShop
+
+func _ready() -> void:
+	_machine_shop._ui = self
+	_machine_shop.populate_machine_shop()
+
 func set_bubble_count(amount):
 	_bubble_count.text = var_to_str(amount)
 	
@@ -30,3 +37,13 @@ func show_asteroid_amount():
 func hide_asteroid_amount():
 	_bubble_amount_progress.hide()
 #endregion
+
+func show_shop():
+	_machine_shop.show()
+	
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	
+func hide_shop():
+	_machine_shop.hide()
+	
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

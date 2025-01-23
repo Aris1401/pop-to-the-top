@@ -3,7 +3,15 @@ class_name Game
 
 var time : float = 0.0
 
-# Game
+# Game states
+enum GameStates {
+	IN_GAME,
+	IN_SHOP
+}
+
+var current_game_state : GameStates = GameStates.IN_GAME
+
+# Game Properties
 var bubble_amount : float = 0.0
 
 # References
@@ -25,6 +33,8 @@ func _ready() -> void:
 	
 	if _player:
 		_player._game = self
+		
+		_player._player_inputs.shop.connect(_on_shop_pressed)
 	
 	if _asteroid:
 		_asteroid._game = self
@@ -91,3 +101,11 @@ func check_asteroid_completion():
 	if _asteroid.amount_needed <= bubble_amount:
 		_ui.hide_asteroid_amount()
 		_asteroid.amount_complete()
+
+func _on_shop_pressed():
+	if current_game_state == GameStates.IN_GAME:
+		_ui.show_shop()
+		current_game_state = GameStates.IN_SHOP
+	else:
+		_ui.hide_shop()
+		current_game_state = GameStates.IN_GAME

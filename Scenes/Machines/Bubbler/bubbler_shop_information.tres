@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="MachineItemShopInformation" load_steps=4 format=3 uid="uid://burtydbwalxag"]
+
+[ext_resource type="PackedScene" uid="uid://bkkfs0ta6lp7c" path="res://Scenes/Machines/Bubbler/bubbler_blueprint.tscn" id="1_osm2o"]
+[ext_resource type="Texture2D" uid="uid://b8e8xdisr5qpa" path="res://icon.svg" id="1_t18y2"]
+[ext_resource type="Script" uid="uid://oterb7nnmu3f" path="res://Scenes/ShopInformations/machine_item_shop_information.gd" id="1_vq8d0"]
+
+[resource]
+script = ExtResource("1_vq8d0")
+machine_image = ExtResource("1_t18y2")
+machine_name = "Bubbler"
+machine_description = "Produces bubbles automatically"
+machine_bubble_price = 1000.0
+machine_blueprint = ExtResource("1_osm2o")
+metadata/_custom_type_script = ExtResource("1_vq8d0")

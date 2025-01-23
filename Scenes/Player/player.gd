@@ -14,7 +14,7 @@ var horizontal_movement : Vector3 = Vector3()
 @export var _player_inputs : PlayerInputs
 @export var _animation_controller : PlayerAnimationController
 
-var _game
+var _game : Game
 
 func _ready() -> void:
 	current_player_acceleration = player_acceleration

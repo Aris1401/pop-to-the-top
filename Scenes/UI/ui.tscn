@@ -1,15 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://b345bmt21ffk5"]
+[gd_scene load_steps=8 format=3 uid="uid://b345bmt21ffk5"]
 
 [ext_resource type="Texture2D" uid="uid://dbcglqwbo4cdy" path="res://Assets/Crosshair/crosshair.png" id="1_ahcct"]
 [ext_resource type="Script" uid="uid://bs3jwigq0yc2x" path="res://Scenes/UI/ui.gd" id="1_de23q"]
 [ext_resource type="Texture2D" uid="uid://byvvd8sgpjy5w" path="res://Assets/Kenney/bar_round_gloss_large_m.png" id="3_fo61o"]
 [ext_resource type="Texture2D" uid="uid://dw6t6a8qmel1x" path="res://Assets/Kenney/Green/Default/bar_round_gloss_large_m.png" id="4_alcrr"]
+[ext_resource type="Script" uid="uid://caw4t7t20r6e" path="res://Scenes/UI/MachineShop/machine_shop.gd" id="5_alcrr"]
+[ext_resource type="Script" uid="uid://oterb7nnmu3f" path="res://Scenes/ShopInformations/machine_item_shop_information.gd" id="6_duuxe"]
+[ext_resource type="Resource" uid="uid://burtydbwalxag" path="res://Scenes/Machines/Bubbler/bubbler_shop_information.tres" id="7_jfwrg"]
 
-[node name="UI" type="CanvasLayer" node_paths=PackedStringArray("_bubble_count", "_timer", "_bubble_amount_progress")]
+[node name="UI" type="CanvasLayer" node_paths=PackedStringArray("_bubble_count", "_timer", "_bubble_amount_progress", "_machine_shop")]
 script = ExtResource("1_de23q")
 _bubble_count = NodePath("PlayerInterface/BubbleCount/HBoxContainer/BubbleCount")
 _timer = NodePath("PlayerInterface/Timer/VBoxContainer/Timer")
 _bubble_amount_progress = NodePath("PlayerInterface/Timer/VBoxContainer/MarginContainer/BubbleAmountProgress")
+_machine_shop = NodePath("MachineShop")
 
 [node name="PlayerInterface" type="Control" parent="."]
 layout_mode = 3
@@ -108,3 +112,55 @@ stretch_margin_right = 5
 stretch_margin_bottom = 5
 texture_under = ExtResource("3_fo61o")
 texture_progress = ExtResource("4_alcrr")
+
+[node name="MachineShop" type="Control" parent="." node_paths=PackedStringArray("_machine_items_container")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_alcrr")
+machine_shop_informations = Array[ExtResource("6_duuxe")]([ExtResource("7_jfwrg")])
+_machine_items_container = NodePath("MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer")
+
+[node name="MarginContainer" type="MarginContainer" parent="MachineShop"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 90
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="Panel" type="Panel" parent="MachineShop/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MachineShop/MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MachineShop/MarginContainer/Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="ShopTitle" type="Label" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "SHOP"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
