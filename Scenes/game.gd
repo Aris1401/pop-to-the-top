@@ -39,7 +39,7 @@ func _ready() -> void:
 		_asteroid._game = self
 		_asteroid.amount_needed_changed.connect(_on_asteroid_amount_needed_changed)
 		
-		_asteroid.initialize_amount_needed(time)
+		_asteroid.initialize_amount_needed(time, get_machines_count())
 	
 	# Connecting signals to the UI
 	bubble_amount_changed.connect(_ui.set_bubble_count)
@@ -115,7 +115,7 @@ func _on_asteroid_amount_needed_changed(amount_needed):
 
 # Permet de checker si le nombre de bulle que l'asteroide avait besoin a ete satisfait
 func check_asteroid_completion():
-	if _asteroid.amount_needed <= bubble_amount:
+	if _asteroid.amount_needed <= bubble_amount and _asteroid._completion_cooldown.is_stopped():
 		_ui.hide_asteroid_amount()
 		_asteroid.amount_complete()
 #endregion
@@ -136,4 +136,9 @@ func _on_shop_closed():
 func _on_bought_item_from_shop(machine_item : MachineItemShopInformation):
 	_player._building_manager.start_building(machine_item)
 	_ui.hide_shop()
+#endregion
+
+#region Machines
+func get_machines_count():
+	return len(get_tree().get_nodes_in_group("Machine"))
 #endregion

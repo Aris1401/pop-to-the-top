@@ -20,6 +20,9 @@ var last_state : BubbleProducerState
 @export var _rate_timer : Timer
 
 func produce():
+	if not is_in_group("Machine"):
+		add_to_group("Machine")
+	
 	if check_for_impossible_state():
 		return
 	

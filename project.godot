@@ -33,6 +33,7 @@ folder_colors={
 [global_group]
 
 Buildable="Any surface where you can place buils on"
+Machine="Anything that is a machine"
 
 [input]
 

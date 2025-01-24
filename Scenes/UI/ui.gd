@@ -29,7 +29,7 @@ func set_bubble_count(amount):
 	_bubble_count.text = var_to_str(amount)
 	_bubble_amount_progress.value = amount
 	
-	_machine_shop.populate_machine_shop(amount)
+	_machine_shop.update_machine_shop(amount)
 #endregion 
 
 #region Timer Informations

@@ -24,8 +24,8 @@ func create(shop_informations : MachineItemShopInformation, machine_shop, bubble
 	
 	if bubble_amount < shop_informations.machine_bubble_price:
 		machine_buy.disabled = true
-	else:
-		machine_buy.pressed.connect(_on_machine_buy_clicked)
+	
+	machine_buy.pressed.connect(_on_machine_buy_clicked)
 
 func _on_machine_buy_clicked():
 	buy_item.emit(self)
