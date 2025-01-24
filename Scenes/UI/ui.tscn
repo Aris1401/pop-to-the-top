@@ -1,19 +1,30 @@
-[gd_scene load_steps=8 format=3 uid="uid://b345bmt21ffk5"]
+[gd_scene load_steps=15 format=3 uid="uid://b345bmt21ffk5"]
 
 [ext_resource type="Texture2D" uid="uid://dbcglqwbo4cdy" path="res://Assets/Crosshair/crosshair.png" id="1_ahcct"]
 [ext_resource type="Script" uid="uid://bs3jwigq0yc2x" path="res://Scenes/UI/ui.gd" id="1_de23q"]
+[ext_resource type="Theme" uid="uid://b7l0v0hm42k7u" path="res://pop-to-the-top-theme.tres" id="2_mbl0m"]
 [ext_resource type="Texture2D" uid="uid://byvvd8sgpjy5w" path="res://Assets/Kenney/bar_round_gloss_large_m.png" id="3_fo61o"]
 [ext_resource type="Texture2D" uid="uid://dw6t6a8qmel1x" path="res://Assets/Kenney/Green/Default/bar_round_gloss_large_m.png" id="4_alcrr"]
 [ext_resource type="Script" uid="uid://caw4t7t20r6e" path="res://Scenes/UI/MachineShop/machine_shop.gd" id="5_alcrr"]
+[ext_resource type="Texture2D" uid="uid://8jwsyk1hpmai" path="res://Assets/Bubble/11651850.png" id="5_fy0us"]
 [ext_resource type="Script" uid="uid://oterb7nnmu3f" path="res://Scenes/ShopInformations/machine_item_shop_information.gd" id="6_duuxe"]
 [ext_resource type="Resource" uid="uid://burtydbwalxag" path="res://Scenes/Machines/Bubbler/bubbler_shop_information.tres" id="7_jfwrg"]
+[ext_resource type="Script" uid="uid://yqrmpdka5duy" path="res://Scenes/UI/game_over_screen.gd" id="9_pmm6b"]
+[ext_resource type="Texture2D" uid="uid://ds5xxfklxdf5f" path="res://Assets/Kenney/bar_square_large_square.png" id="9_s3gqk"]
+[ext_resource type="PackedScene" uid="uid://bv7nxwb8qaaub" path="res://Scenes/UI/MachineItemShop/machine_item_shop.tscn" id="10_vy225"]
+[ext_resource type="FontFile" uid="uid://qk1dmr1w8qfx" path="res://Assets/Fonts/Poppins-Bold.ttf" id="11_h6tq4"]
+[ext_resource type="Texture2D" uid="uid://dmelg4us4iu3e" path="res://Assets/Kenney/Default/button_square_line.png" id="11_t7te2"]
 
-[node name="UI" type="CanvasLayer" node_paths=PackedStringArray("_bubble_count", "_timer", "_bubble_amount_progress", "_machine_shop")]
+[node name="UI" type="CanvasLayer" node_paths=PackedStringArray("_bubble_count", "_timer", "_bubble_amount_progress", "_damage_progress_container", "_damage_progress", "_player_interface", "_machine_shop", "_game_over_screen")]
 script = ExtResource("1_de23q")
-_bubble_count = NodePath("PlayerInterface/BubbleCount/HBoxContainer/BubbleCount")
+_bubble_count = NodePath("PlayerInterface/BubbleCount/MarginContainer/HBoxContainer/BubbleCount")
 _timer = NodePath("PlayerInterface/Timer/VBoxContainer/Timer")
-_bubble_amount_progress = NodePath("PlayerInterface/Timer/VBoxContainer/MarginContainer/BubbleAmountProgress")
+_bubble_amount_progress = NodePath("PlayerInterface/Timer/VBoxContainer/BubbleAmountContainer/BubbleAmountProgress")
+_damage_progress_container = NodePath("PlayerInterface/Timer/VBoxContainer/DamagerProgressContainer")
+_damage_progress = NodePath("PlayerInterface/Timer/VBoxContainer/DamagerProgressContainer/DamageProgress")
+_player_interface = NodePath("PlayerInterface")
 _machine_shop = NodePath("MachineShop")
+_game_over_screen = NodePath("GameOver")
 
 [node name="PlayerInterface" type="Control" parent="."]
 layout_mode = 3
@@ -23,6 +34,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("2_mbl0m")
 
 [node name="Crosshair" type="Control" parent="PlayerInterface"]
 layout_mode = 1
@@ -58,24 +70,42 @@ expand_mode = 1
 
 [node name="BubbleCount" type="MarginContainer" parent="PlayerInterface"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = 2
+anchor_top = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_top = -91.0
+offset_right = 218.0
+grow_vertical = 0
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PlayerInterface/BubbleCount"]
+[node name="MarginContainer" type="MarginContainer" parent="PlayerInterface/BubbleCount"]
 layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="BubbleCount" type="Label" parent="PlayerInterface/BubbleCount/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerInterface/BubbleCount/MarginContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="PlayerInterface/BubbleCount/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_fy0us")
+expand_mode = 3
+
+[node name="BubbleCount" type="Label" parent="PlayerInterface/BubbleCount/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("11_h6tq4")
+theme_override_font_sizes/font_size = 20
 text = "0"
+vertical_alignment = 1
 
 [node name="Timer" type="MarginContainer" parent="PlayerInterface"]
 layout_mode = 1
@@ -94,15 +124,16 @@ layout_mode = 2
 
 [node name="Timer" type="Label" parent="PlayerInterface/Timer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("11_h6tq4")
 text = "00:00:00"
 horizontal_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="PlayerInterface/Timer/VBoxContainer"]
+[node name="BubbleAmountContainer" type="MarginContainer" parent="PlayerInterface/Timer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 60
 theme_override_constants/margin_right = 60
 
-[node name="BubbleAmountProgress" type="TextureProgressBar" parent="PlayerInterface/Timer/VBoxContainer/MarginContainer"]
+[node name="BubbleAmountProgress" type="TextureProgressBar" parent="PlayerInterface/Timer/VBoxContainer/BubbleAmountContainer"]
 layout_mode = 2
 fill_mode = 6
 nine_patch_stretch = true
@@ -113,6 +144,24 @@ stretch_margin_bottom = 5
 texture_under = ExtResource("3_fo61o")
 texture_progress = ExtResource("4_alcrr")
 
+[node name="DamagerProgressContainer" type="MarginContainer" parent="PlayerInterface/Timer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_right = 60
+
+[node name="DamageProgress" type="TextureProgressBar" parent="PlayerInterface/Timer/VBoxContainer/DamagerProgressContainer"]
+layout_mode = 2
+fill_mode = 6
+nine_patch_stretch = true
+stretch_margin_left = 10
+stretch_margin_top = 10
+stretch_margin_right = 10
+stretch_margin_bottom = 10
+texture_under = ExtResource("3_fo61o")
+texture_progress = ExtResource("3_fo61o")
+tint_progress = Color(1, 0.211617, 0.371197, 1)
+
 [node name="MachineShop" type="Control" parent="." node_paths=PackedStringArray("_machine_items_container", "_bubble_count_label")]
 visible = false
 layout_mode = 3
@@ -121,10 +170,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_mbl0m")
 script = ExtResource("5_alcrr")
 machine_shop_informations = Array[ExtResource("6_duuxe")]([ExtResource("7_jfwrg")])
-_machine_items_container = NodePath("MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer")
-_bubble_count_label = NodePath("MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer2/BubbleCount")
+_machine_items_container = NodePath("MarginContainer/Panel/MarginContainer/VBoxContainer/BoxContainer/ColorRect/MarginContainer/HBoxContainer")
+_bubble_count_label = NodePath("MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer2/Container/NinePatchRect/MarginContainer/HBoxContainer/BubbleCount")
 
 [node name="MarginContainer" type="MarginContainer" parent="MachineShop"]
 layout_mode = 1
@@ -138,8 +188,14 @@ theme_override_constants/margin_top = 90
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 30
 
-[node name="Panel" type="Panel" parent="MachineShop/MarginContainer"]
+[node name="Panel" type="NinePatchRect" parent="MachineShop/MarginContainer"]
+self_modulate = Color(0.546588, 0.694268, 0.889422, 1)
 layout_mode = 2
+texture = ExtResource("11_t7te2")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
 
 [node name="MarginContainer" type="MarginContainer" parent="MachineShop/MarginContainer/Panel"]
 layout_mode = 1
@@ -149,7 +205,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
+theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
@@ -162,14 +218,198 @@ layout_mode = 2
 [node name="ShopTitle" type="Label" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("11_h6tq4")
+theme_override_font_sizes/font_size = 32
 text = "SHOP"
-horizontal_alignment = 1
 
-[node name="BubbleCount" type="Label" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Container" type="HBoxContainer" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
-text = "Bubble: 0"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="NinePatchRect" type="NinePatchRect" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer2/Container"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("9_s3gqk")
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer2/Container/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer2/Container/NinePatchRect/MarginContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer2/Container/NinePatchRect/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_fy0us")
+expand_mode = 2
+
+[node name="BubbleCount" type="Label" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer2/Container/NinePatchRect/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_h6tq4")
+text = "0"
+
+[node name="BoxContainer" type="BoxContainer" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColorRect" type="NinePatchRect" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("11_t7te2")
+patch_margin_left = 11
+patch_margin_top = 11
+patch_margin_right = 11
+patch_margin_bottom = 15
+
+[node name="MarginContainer" type="MarginContainer" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/BoxContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/BoxContainer/ColorRect/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
+
+[node name="MachineItemShop" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/BoxContainer/ColorRect/MarginContainer/HBoxContainer" instance=ExtResource("10_vy225")]
+layout_mode = 2
+
+[node name="GameOver" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_mbl0m")
+script = ExtResource("9_pmm6b")
+
+[node name="MarginContainer" type="MarginContainer" parent="GameOver"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="NinePatchRect" type="NinePatchRect" parent="GameOver/MarginContainer"]
+self_modulate = Color(0.545098, 0.694118, 0.890196, 1)
+clip_contents = true
+custom_minimum_size = Vector2(400, 300)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("11_t7te2")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="GameOver/MarginContainer/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOver/MarginContainer/NinePatchRect/MarginContainer"]
+layout_mode = 2
+
+[node name="GameOverText" type="Label" parent="GameOver/MarginContainer/NinePatchRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("11_h6tq4")
+theme_override_font_sizes/font_size = 30
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="GameOver/MarginContainer/NinePatchRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.453745, 0.553679, 0.684178, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="GameOver/MarginContainer/NinePatchRect/MarginContainer/VBoxContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOver/MarginContainer/NinePatchRect/MarginContainer/VBoxContainer/ColorRect/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="ScoreInformation" type="MarginContainer" parent="GameOver/MarginContainer/NinePatchRect/MarginContainer/VBoxContainer/ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOver/MarginContainer/NinePatchRect/MarginContainer/VBoxContainer/ColorRect/MarginContainer/VBoxContainer/ScoreInformation"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="TimeScore" type="Label" parent="GameOver/MarginContainer/NinePatchRect/MarginContainer/VBoxContainer/ColorRect/MarginContainer/VBoxContainer/ScoreInformation/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Your time: 00:00:00"
+horizontal_alignment = 1
+
+[node name="BubbleScore" type="Label" parent="GameOver/MarginContainer/NinePatchRect/MarginContainer/VBoxContainer/ColorRect/MarginContainer/VBoxContainer/ScoreInformation/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Max Bubbles: 10000"
+horizontal_alignment = 1
+
+[node name="Control" type="MarginContainer" parent="GameOver/MarginContainer/NinePatchRect/MarginContainer/VBoxContainer/ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOver/MarginContainer/NinePatchRect/MarginContainer/VBoxContainer/ColorRect/MarginContainer/VBoxContainer/Control"]
+layout_mode = 2
+
+[node name="RetryButton" type="Button" parent="GameOver/MarginContainer/NinePatchRect/MarginContainer/VBoxContainer/ColorRect/MarginContainer/VBoxContainer/Control/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Recommencer"
+
+[node name="MenuButton" type="Button" parent="GameOver/MarginContainer/NinePatchRect/MarginContainer/VBoxContainer/ColorRect/MarginContainer/VBoxContainer/Control/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Revenir vers le menu principal"

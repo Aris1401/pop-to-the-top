@@ -1,0 +1,51 @@
+[gd_resource type="Theme" load_steps=10 format=3 uid="uid://b7l0v0hm42k7u"]
+
+[ext_resource type="FontFile" uid="uid://qk1dmr1w8qfx" path="res://Assets/Fonts/Poppins-Bold.ttf" id="1_358dp"]
+[ext_resource type="FontFile" uid="uid://00v2s8poyt1v" path="res://Assets/Fonts/Poppins-Regular.ttf" id="1_ew3ep"]
+[ext_resource type="Texture2D" uid="uid://dw7kg8dqvd48a" path="res://Assets/Kenney/bar_square_gloss_large_square.png" id="2_358dp"]
+[ext_resource type="Texture2D" uid="uid://ci7iwlokxhyij" path="res://Assets/Kenney/Default/button_square_depth_gloss.png" id="3_ta8ok"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ew3ep"]
+texture = ExtResource("2_358dp")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(0, 0, 24, 24)
+modulate_color = Color(0.0442052, 0.124516, 0.197388, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ta8ok"]
+texture = ExtResource("2_358dp")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+modulate_color = Color(0.102876, 0.317984, 0.50666, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bybdq"]
+texture = ExtResource("3_ta8ok")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 8.0
+modulate_color = Color(0.443901, 0.692895, 0.935598, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l7i8r"]
+texture = ExtResource("3_ta8ok")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 8.0
+modulate_color = Color(0.296457, 0.623108, 0.893006, 1)
+
+[sub_resource type="FontVariation" id="FontVariation_fw0pv"]
+base_font = ExtResource("1_ew3ep")
+
+[resource]
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/fonts/font = ExtResource("1_358dp")
+Button/styles/disabled = SubResource("StyleBoxTexture_ew3ep")
+Button/styles/focus = SubResource("StyleBoxTexture_ta8ok")
+Button/styles/hover = SubResource("StyleBoxTexture_bybdq")
+Button/styles/normal = SubResource("StyleBoxTexture_l7i8r")
+Label/fonts/font = SubResource("FontVariation_fw0pv")

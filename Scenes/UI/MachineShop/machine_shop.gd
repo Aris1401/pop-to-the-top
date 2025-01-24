@@ -15,7 +15,7 @@ const MACHINE_ITEM_SHOP = preload("res://Scenes/UI/MachineItemShop/machine_item_
 signal bought_item(machine_item : MachineItemShopInformation)
 
 func populate_machine_shop(bubble_amount):
-	_bubble_count_label.text = "Bubble: " + var_to_str(bubble_amount)
+	_bubble_count_label.text = var_to_str(bubble_amount)
 	
 	for current_machine_items in _machine_items_container.get_children():
 		current_machine_items.queue_free()
@@ -28,7 +28,7 @@ func populate_machine_shop(bubble_amount):
 		machine_item_shop.buy_item.connect(_on_buy_item)
 
 func update_machine_shop(bubble_amount):
-	_bubble_count_label.text = "Bubble: " + var_to_str(bubble_amount)
+	_bubble_count_label.text = var_to_str(bubble_amount)
 	
 	for machine_item in _machine_items_container.get_children():
 		if machine_item is MachineItemShop:

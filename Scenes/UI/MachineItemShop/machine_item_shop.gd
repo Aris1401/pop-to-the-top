@@ -1,10 +1,10 @@
 extends MarginContainer
 class_name MachineItemShop
 
-@onready var machine_image: TextureRect = $VBoxContainer/MachineImage
-@onready var machine_name: Label = $VBoxContainer/MachineName
-@onready var machine_description: Label = $VBoxContainer/MachineDescription
-@onready var machine_buy: Button = $VBoxContainer/MachineBuy
+@onready var machine_image: TextureRect = %MachineImage
+@onready var machine_name: Label = %MachineName
+@onready var machine_description: RichTextLabel = %MachineDescription
+@onready var machine_buy: Button = %MachineBuy
 
 # Stored data
 var _shop_informations : MachineItemShopInformation

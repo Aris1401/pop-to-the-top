@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_kesn6")
 name = "Bubbler"
-bubble_rate = 0.8
-bubble_amount = 100.0
+bubble_rate = 0.7
+bubble_amount = 150.0
 bubble_multiplier = 1.0
 metadata/_custom_type_script = ExtResource("1_kesn6")

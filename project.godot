@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Pop To The Top"
-run/main_scene="uid://cgnj1wxfnhr1x"
+run/main_scene="uid://cf70gs06t88pq"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 

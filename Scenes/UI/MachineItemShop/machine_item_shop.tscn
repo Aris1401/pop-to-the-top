@@ -1,33 +1,102 @@
-[gd_scene load_steps=3 format=3 uid="uid://bv7nxwb8qaaub"]
+[gd_scene load_steps=7 format=3 uid="uid://bv7nxwb8qaaub"]
 
 [ext_resource type="Texture2D" uid="uid://b8e8xdisr5qpa" path="res://icon.svg" id="1_5ldey"]
+[ext_resource type="Theme" uid="uid://b7l0v0hm42k7u" path="res://pop-to-the-top-theme.tres" id="1_6g76e"]
 [ext_resource type="Script" uid="uid://4g60d53b7sr0" path="res://Scenes/UI/MachineItemShop/machine_item_shop.gd" id="1_brqex"]
+[ext_resource type="Texture2D" uid="uid://dxhrlocwkhavb" path="res://Assets/Kenney/Default/button_square_flat.png" id="3_yscms"]
+[ext_resource type="FontFile" uid="uid://qk1dmr1w8qfx" path="res://Assets/Fonts/Poppins-Bold.ttf" id="4_gfwni"]
+[ext_resource type="Texture2D" uid="uid://c07ldmbdt04fv" path="res://Assets/Kenney/Default/button_square_gradient.png" id="6_yscms"]
 
 [node name="MachineItemShop" type="MarginContainer"]
-custom_minimum_size = Vector2(250, 0)
+custom_minimum_size = Vector2(300, 400)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme = ExtResource("1_6g76e")
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 script = ExtResource("1_brqex")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = ExtResource("3_yscms")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer"]
 layout_mode = 2
 
-[node name="MachineImage" type="TextureRect" parent="VBoxContainer"]
+[node name="MachineName" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.154876, 0.154876, 0.154876, 1)
+theme_override_fonts/font = ExtResource("4_gfwni")
+theme_override_font_sizes/font_size = 20
+text = "Machine"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="MachineImage" type="TextureRect" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
 texture = ExtResource("1_5ldey")
 
-[node name="MachineName" type="Label" parent="VBoxContainer"]
+[node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+self_modulate = Color(1, 1, 1, 0.321569)
 layout_mode = 2
-text = "Machine"
+size_flags_vertical = 3
+texture = ExtResource("6_yscms")
+patch_margin_left = 4
+patch_margin_top = 5
+patch_margin_right = 4
+patch_margin_bottom = 4
 
-[node name="MachineDescription" type="Label" parent="VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="MachineDescription" type="RichTextLabel" parent="NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-text = "This is a machine"
+theme_override_colors/default_color = Color(0.103744, 0.103744, 0.103744, 1)
+text = "Very very bad"
 
-[node name="MachineBuy" type="Button" parent="VBoxContainer"]
+[node name="MachineBuy" type="Button" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Acheter
 "

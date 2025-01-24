@@ -29,6 +29,7 @@ var mouse_velocity_y : float
 @export_category("References")
 @export var _player : Player
 @export var _camera : Camera3D
+@export var _shackable_camera : ShackableCamera
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

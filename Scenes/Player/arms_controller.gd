@@ -16,7 +16,7 @@ func _ready():
 	_player.state_changed.connect(_on_player_state_changed)
 
 func _on_fire():
-	if _player._game.current_game_state == _player._game.GameStates.IN_SHOP || not is_active:
+	if _player._game.current_game_state != _player._game.GameStates.IN_GAME || not is_active:
 		return
 	
 	if not bubble_producer._game:
@@ -35,7 +35,7 @@ func _on_stopped_fire():
 	if not is_active:
 		return
 	
-	if _player._game.current_game_state == _player._game.GameStates.IN_SHOP:
+	if _player._game.current_game_state != _player._game.GameStates.IN_GAME:
 		return
 	
 	_player._animation_controller.set_condition("Movement", "stop_shooting", true)
