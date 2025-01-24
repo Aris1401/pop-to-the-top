@@ -1,18 +1,46 @@
-[gd_scene load_steps=3 format=3 uid="uid://bkkfs0ta6lp7c"]
+[gd_scene load_steps=8 format=3 uid="uid://bkkfs0ta6lp7c"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_084lj"]
+[ext_resource type="Script" uid="uid://cs15v6y8c0pfq" path="res://Scenes/Machines/Bubbler/bubbler_blueprint.gd" id="1_igbcc"]
+[ext_resource type="PackedScene" uid="uid://baey0snu61qk3" path="res://Scenes/Machines/Bubbler/bubbler.tscn" id="2_5doen"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_koftd"]
-size = Vector3(1.38794, 2.39465, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ufg2s"]
+transparency = 1
+albedo_color = Color(0, 0.721569, 0.847059, 0.466667)
 
-[node name="Bubbler" type="StaticBody3D"]
+[sub_resource type="BoxMesh" id="BoxMesh_igbcc"]
+material = SubResource("StandardMaterial3D_ufg2s")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_igbcc"]
+transparency = 1
+albedo_color = Color(0.758455, 0, 0.0830774, 0.466667)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5doen"]
+material = SubResource("StandardMaterial3D_igbcc")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ufg2s"]
+height = 2.75732
+radius = 1.66016
+
+[node name="BubblerBlueprint" type="Node3D" node_paths=PackedStringArray("_placing_area", "_valid_blueprint_mesh", "_invalid_blueprint_mesh")]
+script = ExtResource("1_igbcc")
+machine_scene = ExtResource("2_5doen")
+_placing_area = NodePath("PlacingArea")
+_valid_blueprint_mesh = NodePath("Node3D/ValidBlueprint")
+_invalid_blueprint_mesh = NodePath("Node3D/InvalidBlueprint")
 
 [node name="Node3D" type="Node3D" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+[node name="ValidBlueprint" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(1.39319, 0, 0, 0, 2.37326, 0, 0, 0, 1, 0, 1.175, 0)
-mesh = SubResource("BoxMesh_084lj")
+mesh = SubResource("BoxMesh_igbcc")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0191021, 1.15795, 0)
-shape = SubResource("BoxShape3D_koftd")
+[node name="InvalidBlueprint" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1.39319, 0, 0, 0, 2.37326, 0, 0, 0, 1, 0, 1.175, 0)
+visible = false
+mesh = SubResource("BoxMesh_5doen")
+
+[node name="PlacingArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlacingArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.40768, 0)
+shape = SubResource("CylinderShape3D_ufg2s")

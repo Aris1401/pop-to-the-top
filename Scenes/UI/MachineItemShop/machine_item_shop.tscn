@@ -27,7 +27,7 @@ text = "Machine"
 layout_mode = 2
 text = "This is a machine"
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="MachineBuy" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Acheter
 "

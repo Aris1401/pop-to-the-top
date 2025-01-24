@@ -113,7 +113,7 @@ stretch_margin_bottom = 5
 texture_under = ExtResource("3_fo61o")
 texture_progress = ExtResource("4_alcrr")
 
-[node name="MachineShop" type="Control" parent="." node_paths=PackedStringArray("_machine_items_container")]
+[node name="MachineShop" type="Control" parent="." node_paths=PackedStringArray("_machine_items_container", "_bubble_count_label")]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -124,6 +124,7 @@ grow_vertical = 2
 script = ExtResource("5_alcrr")
 machine_shop_informations = Array[ExtResource("6_duuxe")]([ExtResource("7_jfwrg")])
 _machine_items_container = NodePath("MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer")
+_bubble_count_label = NodePath("MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer2/BubbleCount")
 
 [node name="MarginContainer" type="MarginContainer" parent="MachineShop"]
 layout_mode = 1
@@ -155,10 +156,18 @@ theme_override_constants/margin_bottom = 20
 [node name="VBoxContainer" type="VBoxContainer" parent="MachineShop/MarginContainer/Panel/MarginContainer"]
 layout_mode = 2
 
-[node name="ShopTitle" type="Label" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="ShopTitle" type="Label" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "SHOP"
 horizontal_alignment = 1
+
+[node name="BubbleCount" type="Label" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Bubble: 0"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2

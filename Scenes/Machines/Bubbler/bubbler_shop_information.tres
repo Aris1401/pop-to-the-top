@@ -9,6 +9,6 @@ script = ExtResource("1_vq8d0")
 machine_image = ExtResource("1_t18y2")
 machine_name = "Bubbler"
 machine_description = "Produces bubbles automatically"
-machine_bubble_price = 1000.0
+machine_bubble_price = 300.0
 machine_blueprint = ExtResource("1_osm2o")
 metadata/_custom_type_script = ExtResource("1_vq8d0")

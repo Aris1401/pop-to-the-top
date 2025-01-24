@@ -58,6 +58,17 @@ func _physics_process(delta: float) -> void:
 	if enable_arms_tilt: arms_tilt(delta)
 	if enable_arms_sway: arms_sway(delta)
 
+func create_ray(ray_distance):
+	var space_state = get_world_3d().direct_space_state
+	var mouse_position = get_viewport().get_mouse_position()
+	
+	var ray_origin = _camera.project_ray_origin(mouse_position)
+	var end = ray_origin + _camera.project_ray_normal(mouse_position) * ray_distance
+	
+	var query = PhysicsRayQueryParameters3D.create(ray_origin, end)
+	query.exclude = [_player]
+	return space_state.intersect_ray(query)
+
 func camera_tilt(delta):
 	if _camera:
 		_camera.rotation.z = lerp(_camera.rotation.z, -_player._player_inputs.player_direction.x * camera_tilt_amount, 10 * delta)

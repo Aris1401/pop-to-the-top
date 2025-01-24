@@ -30,6 +30,10 @@ folder_colors={
 "res://Scenes/": "blue"
 }
 
+[global_group]
+
+Buildable="Any surface where you can place buils on"
+
 [input]
 
 fwd={

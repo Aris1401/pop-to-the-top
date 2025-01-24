@@ -33,7 +33,6 @@ func _ready() -> void:
 	
 	if _player:
 		_player._game = self
-		
 		_player._player_inputs.shop.connect(_on_shop_pressed)
 	
 	if _asteroid:
@@ -44,9 +43,26 @@ func _ready() -> void:
 	
 	# Connecting signals to the UI
 	bubble_amount_changed.connect(_ui.set_bubble_count)
+	
+	# Connecting signals from the UI
+	# SHOP
+	_ui.shop_opened.connect(_on_shop_opened)
+	_ui.shop_closed.connect(_on_shop_closed)
+	_ui.bought_item_from_shop.connect(_on_bought_item_from_shop)
+
+func game_state_to_str():
+	match (current_game_state):
+		0:
+			return "In Game"
+		1:
+			return "In Shop"
 
 func _process(delta: float) -> void:
 	update_time(delta)
+	
+	ImGui.Begin("Game State")
+	ImGui.Text("Game state: " + game_state_to_str())
+	ImGui.End()
 
 #region TIME
 func update_time(delta):
@@ -92,6 +108,7 @@ func _on_bubble_popped(amount):
 	bubble_amount_changed.emit(bubble_amount)
 #endregion
 
+#region Asteroid
 func _on_asteroid_amount_needed_changed(amount_needed):
 	_ui.set_asteroid_amount(_asteroid.amount_needed)
 	_ui.show_asteroid_amount()
@@ -101,11 +118,22 @@ func check_asteroid_completion():
 	if _asteroid.amount_needed <= bubble_amount:
 		_ui.hide_asteroid_amount()
 		_asteroid.amount_complete()
+#endregion
 
+#region Shop Manager
 func _on_shop_pressed():
 	if current_game_state == GameStates.IN_GAME:
 		_ui.show_shop()
-		current_game_state = GameStates.IN_SHOP
 	else:
 		_ui.hide_shop()
-		current_game_state = GameStates.IN_GAME
+
+func _on_shop_opened():
+	current_game_state = GameStates.IN_SHOP
+
+func _on_shop_closed():
+	current_game_state = GameStates.IN_GAME
+
+func _on_bought_item_from_shop(machine_item : MachineItemShopInformation):
+	_player._building_manager.start_building(machine_item)
+	_ui.hide_shop()
+#endregion

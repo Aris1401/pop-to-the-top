@@ -1,0 +1,31 @@
+[gd_scene load_steps=8 format=3 uid="uid://cgnj1wxfnhr1x"]
+
+[ext_resource type="Script" uid="uid://bt3ci5lsgxse2" path="res://Scenes/game.gd" id="1_3dryh"]
+[ext_resource type="PackedScene" uid="uid://b7i74urpbvylu" path="res://Scenes/World/prototype_level.tscn" id="1_ebmjs"]
+[ext_resource type="PackedScene" uid="uid://dmfi1lalc6i3l" path="res://Scenes/Player/player.tscn" id="2_qxrlw"]
+[ext_resource type="PackedScene" uid="uid://b345bmt21ffk5" path="res://Scenes/UI/ui.tscn" id="3_wrm1d"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qxrlw"]
+
+[sub_resource type="Sky" id="Sky_wrm1d"]
+sky_material = SubResource("ProceduralSkyMaterial_qxrlw")
+
+[sub_resource type="Environment" id="Environment_3dryh"]
+background_mode = 2
+sky = SubResource("Sky_wrm1d")
+ambient_light_color = Color(0.379982, 0.633415, 0.767615, 1)
+glow_enabled = true
+
+[node name="Game" type="Node3D" node_paths=PackedStringArray("_player", "_ui")]
+script = ExtResource("1_3dryh")
+_player = NodePath("Player")
+_ui = NodePath("UI")
+
+[node name="PrototypeLevel" parent="." instance=ExtResource("1_ebmjs")]
+
+[node name="Player" parent="." instance=ExtResource("2_qxrlw")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3dryh")
+
+[node name="UI" parent="." instance=ExtResource("3_wrm1d")]
