@@ -27,6 +27,9 @@ func _ready() -> void:
 	_building_cooldown_timer.timeout.connect(_on_building_cooldown_timeout)
 
 func start_building(machine_item : MachineItemShopInformation):
+	if current_build:
+		return
+	
 	_player.change_state(_player.PlayerStates.BUILDING)
 	current_build = machine_item
 	

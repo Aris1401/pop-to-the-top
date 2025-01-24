@@ -27,6 +27,12 @@ func emit_bubbles():
 
 func initialize_amount_needed(time, machines_count):
 	if _game:
+		if not _damage_timer.is_stopped():
+			_damage_timer.stop()
+		
+		if not _limit_timer.is_stopped():
+			_limit_timer.stop()
+		
 		amount_needed = get_bubble_needed(time, machines_count)
 		amount_needed_changed.emit(amount_needed)
 		
