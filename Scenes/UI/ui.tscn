@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b345bmt21ffk5"]
+[gd_scene load_steps=22 format=3 uid="uid://b345bmt21ffk5"]
 
 [ext_resource type="Texture2D" uid="uid://dbcglqwbo4cdy" path="res://Assets/Crosshair/crosshair.png" id="1_ahcct"]
 [ext_resource type="Script" uid="uid://bs3jwigq0yc2x" path="res://Scenes/UI/ui.gd" id="1_de23q"]
@@ -14,9 +14,66 @@
 [ext_resource type="PackedScene" uid="uid://bv7nxwb8qaaub" path="res://Scenes/UI/MachineItemShop/machine_item_shop.tscn" id="10_vy225"]
 [ext_resource type="FontFile" uid="uid://qk1dmr1w8qfx" path="res://Assets/Fonts/Poppins-Bold.ttf" id="11_h6tq4"]
 [ext_resource type="Texture2D" uid="uid://dmelg4us4iu3e" path="res://Assets/Kenney/Default/button_square_line.png" id="11_t7te2"]
+[ext_resource type="Shader" uid="uid://ds6byu1xntl0" path="res://Scenes/UI/damage_overlay.gdshader" id="15_t7te2"]
 
-[node name="UI" type="CanvasLayer" node_paths=PackedStringArray("_bubble_count", "_timer", "_bubble_amount_progress", "_damage_progress_container", "_damage_progress", "_player_interface", "_machine_shop", "_game_over_screen")]
+[sub_resource type="Gradient" id="Gradient_t7te2"]
+offsets = PackedFloat32Array(0, 0.713235, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.684762, 0.188256, 0.154301, 1, 0.316898, 0.0776341, 0.0457441, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_56q1t"]
+gradient = SubResource("Gradient_t7te2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_56q1t"]
+shader = ExtResource("15_t7te2")
+shader_parameter/TintGradient = SubResource("GradientTexture1D_56q1t")
+shader_parameter/EffectStrength = 0.0
+shader_parameter/TextureEffect = 0.0
+shader_parameter/Feather = 1.0
+shader_parameter/MinRadius = 0.815
+shader_parameter/MaxRadius = 0.0
+shader_parameter/PulseSpeed = 2.0
+shader_parameter/PulsePower = 0.2
+
+[sub_resource type="Animation" id="Animation_fevae"]
+resource_name = "damage_taken"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DamageIndicator/DamagerOverlay:material:shader_parameter/EffectStrength")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_ny3ap"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DamageIndicator/DamagerOverlay:material:shader_parameter/EffectStrength")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vqjbf"]
+_data = {
+&"RESET": SubResource("Animation_ny3ap"),
+&"damage_taken": SubResource("Animation_fevae")
+}
+
+[node name="UI" type="CanvasLayer" node_paths=PackedStringArray("_animation_player", "_bubble_count", "_timer", "_bubble_amount_progress", "_damage_progress_container", "_damage_progress", "_player_interface", "_machine_shop", "_game_over_screen")]
 script = ExtResource("1_de23q")
+_animation_player = NodePath("AnimationPlayer")
 _bubble_count = NodePath("PlayerInterface/BubbleCount/MarginContainer/HBoxContainer/BubbleCount")
 _timer = NodePath("PlayerInterface/Timer/VBoxContainer/Timer")
 _bubble_amount_progress = NodePath("PlayerInterface/Timer/VBoxContainer/BubbleAmountContainer/BubbleAmountProgress")
@@ -413,3 +470,27 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "Revenir vers le menu principal"
+
+[node name="DamageIndicator" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DamagerOverlay" type="ColorRect" parent="DamageIndicator"]
+material = SubResource("ShaderMaterial_56q1t")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_vqjbf")
+}

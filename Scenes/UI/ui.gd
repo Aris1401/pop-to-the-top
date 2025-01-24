@@ -1,6 +1,8 @@
 extends CanvasLayer
 class_name UI
 
+@export var _animation_player : AnimationPlayer
+
 # References
 @export var _bubble_count : Label
 @export var _timer : Label 
@@ -102,6 +104,8 @@ func _on_bought_item(machine_item : MachineItemShopInformation):
 
 #region Damage
 func damage_dealt(damage, total_damage):
+	_animation_player.play("damage_taken")
+	
 	if total_damage == 0:
 		_damage_progress_container.hide()
 	else:

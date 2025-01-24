@@ -15,6 +15,7 @@ var last_state : BubbleProducerState
 # Informations
 @export var bubble_rates : BaseBubbleRates
 @export var bubble_vfx : BubbleVFX
+@export var bubble_sfx : AudioStreamPlayer3D
 
 # References
 @export var _rate_timer : Timer
@@ -35,6 +36,9 @@ func produce():
 	if bubble_vfx:
 		bubble_vfx.start()
 	
+	if bubble_sfx and not bubble_sfx.playing:
+		bubble_sfx.play()
+	
 	# Changing the state
 	change_state(BubbleProducerState.PRODUCING)
 
@@ -47,6 +51,9 @@ func end():
 	
 	if bubble_vfx:
 		bubble_vfx.stop()
+	
+	if bubble_sfx:
+		bubble_sfx.stop()
 	
 	change_state(BubbleProducerState.IDLE)
 

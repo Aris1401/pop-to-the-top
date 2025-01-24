@@ -21,6 +21,9 @@ func _ready() -> void:
 	initial_rotation = camera.rotation_degrees
 
 func _process(delta):
+	if trauma <= 0.01:
+		return
+	
 	time += delta
 	trauma = max(trauma - delta * trauma_reduction_rate, 0.0)
 	

@@ -26,6 +26,7 @@ var total_damage : float = 0.0
 @export var _player : Player
 @export var _ui : UI
 @export var _asteroid : Asteroid
+@export var _damage_hit_sfx : AudioStreamPlayer3D
 
 # Signals
 signal bubble_amount_changed(amount, required)
@@ -170,9 +171,29 @@ func get_machines_count():
 #region Damage
 func _on_damage_dealt(damage, total_damage):
 	_player._camera_controller._shackable_camera.add_trauma(1.5)
+	
+	var rand_pos = get_random_position_around_player(_player.global_position, 20)
+	_damage_hit_sfx.global_position = rand_pos
+	_damage_hit_sfx.play()
 
 func _on_damage_limit_reached():
 	_ui.show_game_over_screen(get_time_information(), max_bubble_amount)
+
+func get_random_position_around_player(player_position: Vector3, radius: float) -> Vector3:
+	# Generate random spherical coordinates
+	var theta = randf() * TAU  # Random angle around Y-axis (0 to 2π)
+	var phi = acos(2.0 * randf() - 1.0)  # Random angle from Z-axis (0 to π)
+	
+	# Convert spherical coordinates to Cartesian coordinates
+	var x = sin(phi) * cos(theta)
+	var y = sin(phi) * sin(theta)
+	var z = cos(phi)
+	
+	# Create the random offset vector
+	var random_offset = Vector3(x, y, z) * randf() * radius
+	
+	# Add the offset to the player's position
+	return player_position + random_offset
 #endregion
 
 #region Game Over Screen

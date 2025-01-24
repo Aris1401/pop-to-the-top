@@ -1,15 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://cgnj1wxfnhr1x"]
+[gd_scene load_steps=10 format=3 uid="uid://cgnj1wxfnhr1x"]
 
 [ext_resource type="Script" uid="uid://bt3ci5lsgxse2" path="res://Scenes/game.gd" id="1_3dryh"]
 [ext_resource type="PackedScene" uid="uid://b7i74urpbvylu" path="res://Scenes/World/prototype_level.tscn" id="1_ebmjs"]
 [ext_resource type="PackedScene" uid="uid://dmfi1lalc6i3l" path="res://Scenes/Player/player.tscn" id="2_qxrlw"]
 [ext_resource type="Script" uid="uid://dntj28mt6klsn" path="res://Scenes/GameManagers/damage_manager.gd" id="2_wowpa"]
 [ext_resource type="PackedScene" uid="uid://b345bmt21ffk5" path="res://Scenes/UI/ui.tscn" id="3_wrm1d"]
+[ext_resource type="AudioStream" uid="uid://b07a4dm0mi01n" path="res://Assets/Sounds/hit_explosion.wav" id="7_1l0tm"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qxrlw"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wowpa"]
 
 [sub_resource type="Sky" id="Sky_wrm1d"]
-sky_material = SubResource("ProceduralSkyMaterial_qxrlw")
+sky_material = SubResource("ProceduralSkyMaterial_wowpa")
 
 [sub_resource type="Environment" id="Environment_3dryh"]
 background_mode = 2
@@ -17,12 +18,13 @@ sky = SubResource("Sky_wrm1d")
 ambient_light_color = Color(0.379982, 0.633415, 0.767615, 1)
 glow_enabled = true
 
-[node name="Game" type="Node3D" node_paths=PackedStringArray("damage_manager", "_player", "_ui")]
+[node name="Game" type="Node3D" node_paths=PackedStringArray("damage_manager", "_player", "_ui", "_damage_hit_sfx")]
 process_mode = 3
 script = ExtResource("1_3dryh")
 damage_manager = NodePath("DamageManager")
 _player = NodePath("Player")
 _ui = NodePath("UI")
+_damage_hit_sfx = NodePath("DamageHit")
 
 [node name="DamageManager" type="Node" parent="."]
 process_mode = 1
@@ -38,3 +40,7 @@ process_mode = 1
 environment = SubResource("Environment_3dryh")
 
 [node name="UI" parent="." instance=ExtResource("3_wrm1d")]
+
+[node name="DamageHit" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("7_1l0tm")
+volume_db = -10.0
