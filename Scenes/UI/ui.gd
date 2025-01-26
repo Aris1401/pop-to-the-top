@@ -25,6 +25,10 @@ class_name UI
 # Pause menu
 @export var _pause_menu_screen : PauseMenu
 
+# Iminent impact pop up
+@export var _iminent_impact_pop_up : NinePatchRect
+@export var _iminent_impact_timer : Label
+
 # ------ Controls
 @export_category("Player Controls")
 @export var player_normal_controls_screen : VBoxContainer
@@ -164,4 +168,17 @@ func show_pause_menu_screen():
 func hide_pause_menu_screen():
 	_pause_menu_screen.hide()
 	pause_closed.emit()
+#endregion
+
+#region Iminent Impact
+func show_iminent_impact_pop_up():
+	_iminent_impact_pop_up.show()
+
+func hide_iminent_impact_pop_up():
+	_iminent_impact_pop_up.hide()
+
+func update_iminent_impact_timer(time):
+	var seconds = int(time)
+	var milliseconds = int((time - seconds) * 100)
+	_iminent_impact_timer.text = "%02d:%02d" % [seconds, int(milliseconds)]
 #endregion

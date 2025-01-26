@@ -92,6 +92,7 @@ func game_state_to_str():
 
 func _process(delta: float) -> void:
 	_ui.set_timer(timer_manager.time)
+	update_iminent_impact_timer()
 
 #region BUBBLE
 func create_bubble(amount, lifetime):
@@ -125,11 +126,16 @@ func _on_bubble_popped(amount):
 func _on_asteroid_amount_needed_changed(amount_needed):
 	_ui.set_asteroid_amount(_asteroid.amount_needed)
 	_ui.show_asteroid_amount()
+	_ui.show_iminent_impact_pop_up()
+
+func update_iminent_impact_timer():
+	_ui.update_iminent_impact_timer(_asteroid._limit_timer.time_left)
 
 # Permet de checker si le nombre de bulle que l'asteroide avait besoin a ete satisfait
 func check_asteroid_completion():
 	if _asteroid.amount_needed <= bubble_amount and _asteroid._completion_cooldown.is_stopped():
 		_ui.hide_asteroid_amount()
+		_ui.hide_iminent_impact_pop_up()
 		_asteroid.amount_complete()
 #endregion
 
@@ -158,6 +164,8 @@ func get_machines_count():
 
 #region Damage
 func _on_damage_dealt(damage, total_damage):
+	_ui.hide_iminent_impact_pop_up()
+	
 	_player._camera_controller._shackable_camera.add_trauma(1.5)
 	
 	var rand_pos = get_random_position_around_player(_player.global_position, 20)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://b345bmt21ffk5"]
+[gd_scene load_steps=31 format=3 uid="uid://b345bmt21ffk5"]
 
 [ext_resource type="Texture2D" uid="uid://dbcglqwbo4cdy" path="res://Assets/Crosshair/crosshair.png" id="1_ahcct"]
 [ext_resource type="Script" uid="uid://bs3jwigq0yc2x" path="res://Scenes/UI/ui.gd" id="1_de23q"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://oterb7nnmu3f" path="res://Scenes/ShopInformations/machine_item_shop_information.gd" id="6_duuxe"]
 [ext_resource type="Resource" uid="uid://burtydbwalxag" path="res://Scenes/Machines/Bubbler/bubbler_shop_information.tres" id="7_jfwrg"]
 [ext_resource type="Texture2D" uid="uid://crs5pkwcl1ffr" path="res://Assets/Icons/bubble_shop.png" id="8_fevae"]
+[ext_resource type="Texture2D" uid="uid://cqcjpf6eap4g8" path="res://Assets/Kenney/Default/button_square_border.png" id="8_jx4bj"]
 [ext_resource type="Texture2D" uid="uid://hu3krrh36xvb" path="res://Assets/Icons/bubble_lmb.png" id="9_ny3ap"]
 [ext_resource type="Script" uid="uid://yqrmpdka5duy" path="res://Scenes/UI/game_over_screen.gd" id="9_pmm6b"]
 [ext_resource type="Texture2D" uid="uid://ds5xxfklxdf5f" path="res://Assets/Kenney/bar_square_large_square.png" id="9_s3gqk"]
@@ -79,7 +80,7 @@ _data = {
 &"damage_taken": SubResource("Animation_fevae")
 }
 
-[node name="UI" type="CanvasLayer" node_paths=PackedStringArray("_animation_player", "_bubble_count", "_timer", "_bubble_amount_progress", "_damage_progress_container", "_damage_progress", "_player_interface", "_machine_shop", "_game_over_screen", "_pause_menu_screen", "player_normal_controls_screen", "player_building_controls_screen")]
+[node name="UI" type="CanvasLayer" node_paths=PackedStringArray("_animation_player", "_bubble_count", "_timer", "_bubble_amount_progress", "_damage_progress_container", "_damage_progress", "_player_interface", "_machine_shop", "_game_over_screen", "_pause_menu_screen", "_iminent_impact_pop_up", "_iminent_impact_timer", "player_normal_controls_screen", "player_building_controls_screen")]
 script = ExtResource("1_de23q")
 _animation_player = NodePath("AnimationPlayer")
 _bubble_count = NodePath("PlayerInterface/BubbleCount/MarginContainer/HBoxContainer/BubbleCount")
@@ -91,6 +92,8 @@ _player_interface = NodePath("PlayerInterface")
 _machine_shop = NodePath("MachineShop")
 _game_over_screen = NodePath("GameOver")
 _pause_menu_screen = NodePath("Pause")
+_iminent_impact_pop_up = NodePath("PlayerInterface/Timer/VBoxContainer/IminentImpact")
+_iminent_impact_timer = NodePath("PlayerInterface/Timer/VBoxContainer/IminentImpact/MarginContainer/VBoxContainer/IminentImpactTimer")
 player_normal_controls_screen = NodePath("PlayerInterface/Controls/HBoxContainer/NormalControls")
 player_building_controls_screen = NodePath("PlayerInterface/Controls/HBoxContainer/BuildControls")
 
@@ -231,6 +234,48 @@ texture_under = ExtResource("3_fo61o")
 texture_progress = ExtResource("3_fo61o")
 tint_under = Color(1, 1, 1, 0.478431)
 tint_progress = Color(1, 0.211617, 0.371197, 1)
+
+[node name="IminentImpact" type="NinePatchRect" parent="PlayerInterface/Timer/VBoxContainer"]
+self_modulate = Color(0.882109, 0.234888, 0.277403, 1)
+custom_minimum_size = Vector2(300, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("8_jx4bj")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerInterface/Timer/VBoxContainer/IminentImpact"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerInterface/Timer/VBoxContainer/IminentImpact/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Titre" type="Label" parent="PlayerInterface/Timer/VBoxContainer/IminentImpact/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("11_h6tq4")
+text = "iminent impact in:"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="IminentImpactTimer" type="Label" parent="PlayerInterface/Timer/VBoxContainer/IminentImpact/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("11_h6tq4")
+text = "00:00"
+horizontal_alignment = 1
 
 [node name="Controls" type="MarginContainer" parent="PlayerInterface"]
 layout_mode = 1
