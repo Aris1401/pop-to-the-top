@@ -1000,8 +1000,8 @@ bones/2/name = "BM_Wand"
 bones/2/parent = 0
 bones/2/rest = Transform3D(1, -3.73449e-14, 1.50996e-07, -1.45452e-14, -1, -1.50996e-07, 1.50996e-07, 1.50996e-07, -1, 1.16035e-17, 0.0522574, 0.000856681)
 bones/2/enabled = true
-bones/2/position = Vector3(0.0517916, 0.0706064, -0.0305469)
-bones/2/rotation = Quaternion(0.197543, 0.589584, 0.404293, -0.670757)
+bones/2/position = Vector3(1.16035e-17, 0.0522574, 0.000856681)
+bones/2/rotation = Quaternion(1, -1.73258e-14, 7.54979e-08, 1.33158e-07)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/name = "BM_Wand_2"
 bones/3/parent = 2
@@ -1021,7 +1021,7 @@ mesh = SubResource("ArrayMesh_1yym0")
 skeleton = NodePath("")
 
 [node name="BM_Wand_2" type="BoneAttachment3D" parent="Head/ArmsController/arms - polished/rig/GeneralSkeleton/BoneAttachment3D/BM_Socket/bubble_maker - link/BubbleMaker_001/Skeleton3D"]
-transform = Transform3D(-0.0221252, -0.631204, -0.7753, -0.950665, -0.226735, 0.211724, -0.309429, 0.741736, -0.595047, 0.0459977, 0.0319353, 0.0667548)
+transform = Transform3D(1, 1.42109e-14, 5.09686e-14, -4.26326e-14, 1, 2.78975e-08, -4.76524e-14, -2.78975e-08, 1, 3.58548e-16, -0.000371193, 0.0593353)
 bone_name = "BM_Wand_2"
 bone_idx = 3
 

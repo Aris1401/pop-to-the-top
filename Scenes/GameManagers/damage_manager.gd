@@ -8,7 +8,15 @@ var total_damage : float = 0.0
 signal damage_dealt(damage : float, total_damage : float)
 signal limit_reached
 
+var immunity : bool = false
+
+func reset_damage():
+	do_damage(-total_damage)
+
 func do_damage(damage):
+	if immunity:
+		return
+	
 	total_damage += damage
 	
 	if total_damage >= 100:

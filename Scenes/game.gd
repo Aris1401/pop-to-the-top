@@ -199,6 +199,7 @@ func _on_game_over_screen_opened():
 	# Close all 
 	_ui.hide_player_interface()
 	_ui.hide_shop()
+	_ui.hide_pause_menu_screen()
 	
 	get_tree().paused = true
 

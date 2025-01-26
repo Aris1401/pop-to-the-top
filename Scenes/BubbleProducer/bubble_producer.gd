@@ -7,7 +7,8 @@ var _game : Game
 enum BubbleProducerState {
 	PRODUCING,
 	IDLE,
-	IMPOSSIBLE_STATE
+	IMPOSSIBLE_STATE,
+	BROKE
 }
 var current_state : BubbleProducerState = BubbleProducerState.IDLE
 var last_state : BubbleProducerState
@@ -15,6 +16,8 @@ var last_state : BubbleProducerState
 # Informations
 @export_category("Bubble Producer Informations")
 @export var bubble_rates : BaseBubbleRates
+@export var breakdown_probability : float = 0.0
+@export_subgroup("FX")
 @export var bubble_vfx : BubbleVFX
 @export var bubble_sfx : AudioStreamPlayer3D
 @export_subgroup("Animations")
@@ -76,7 +79,12 @@ func end():
 func _on_rate_timer_timeout():
 	if _game:
 		_game.create_bubble(bubble_rates.bubble_amount * bubble_rates.bubble_multiplier, 10)
-		produce()
+		
+		if calculate_breakdown_probability():
+			end()
+			change_state(BubbleProducerState.BROKE)
+		else:
+			produce()
 
 #region StateManager
 func change_state(state : BubbleProducerState):
@@ -99,4 +107,15 @@ func get_state_str(state):
 		return "Idle"
 	elif state == BubbleProducerState.IMPOSSIBLE_STATE:
 		return "Impossible"
+	else:
+		return "Broke"
+#endregion
+
+#region Breakdown Probability
+func calculate_breakdown_probability():
+	randomize()
+	
+	var rnd = randf()
+	
+	return false if breakdown_probability == 0 else rnd <= breakdown_probability / 100.0
 #endregion

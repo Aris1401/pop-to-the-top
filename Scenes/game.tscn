@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cgnj1wxfnhr1x"]
+[gd_scene load_steps=12 format=3 uid="uid://cgnj1wxfnhr1x"]
 
 [ext_resource type="Script" uid="uid://bt3ci5lsgxse2" path="res://Scenes/game.gd" id="1_3dryh"]
 [ext_resource type="PackedScene" uid="uid://dmfi1lalc6i3l" path="res://Scenes/Player/player.tscn" id="2_qxrlw"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b345bmt21ffk5" path="res://Scenes/UI/ui.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://du86o5aq0uxte" path="res://Scenes/World/level.tscn" id="6_i6g32"]
 [ext_resource type="AudioStream" uid="uid://b07a4dm0mi01n" path="res://Assets/Sounds/hit_explosion.wav" id="7_1l0tm"]
+[ext_resource type="Script" uid="uid://cxla52lbwtad4" path="res://Scenes/GameManagers/debug_manager.gd" id="8_v158k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wowpa"]
 sky_top_color = Color(0.189057, 0.388859, 0.720027, 1)
@@ -50,6 +51,10 @@ script = ExtResource("2_wowpa")
 [node name="TimerManager" type="Node" parent="."]
 process_mode = 1
 script = ExtResource("3_1l0tm")
+
+[node name="DebugManager" type="Node" parent="." node_paths=PackedStringArray("_game")]
+script = ExtResource("8_v158k")
+_game = NodePath("..")
 
 [node name="Player" parent="." instance=ExtResource("2_qxrlw")]
 process_mode = 1

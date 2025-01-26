@@ -194,6 +194,7 @@ _data = {
 [node name="Bubbler" type="StaticBody3D" node_paths=PackedStringArray("bubble_vfx", "_animation_player", "_rate_timer")]
 script = ExtResource("1_4jpa8")
 bubble_rates = ExtResource("2_ew872")
+breakdown_probability = 2.0
 bubble_vfx = NodePath("BubblesVFX")
 _animation_player = NodePath("AnimationPlayer")
 animation_producing_name = &"working"
@@ -231,3 +232,8 @@ shape = SubResource("ConcavePolygonShape3D_l77v8")
 libraries = {
 &"": SubResource("AnimationLibrary_hmtgx")
 }
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.67149, 0)
+billboard = 1
+text = "TEST"
