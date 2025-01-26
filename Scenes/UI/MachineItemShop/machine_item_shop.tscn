@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bv7nxwb8qaaub"]
+[gd_scene load_steps=8 format=3 uid="uid://bv7nxwb8qaaub"]
 
 [ext_resource type="Texture2D" uid="uid://b8e8xdisr5qpa" path="res://icon.svg" id="1_5ldey"]
 [ext_resource type="Theme" uid="uid://b7l0v0hm42k7u" path="res://pop-to-the-top-theme.tres" id="1_6g76e"]
@@ -6,9 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://dxhrlocwkhavb" path="res://Assets/Kenney/Default/button_square_flat.png" id="3_yscms"]
 [ext_resource type="FontFile" uid="uid://qk1dmr1w8qfx" path="res://Assets/Fonts/Poppins-Bold.ttf" id="4_gfwni"]
 [ext_resource type="Texture2D" uid="uid://c07ldmbdt04fv" path="res://Assets/Kenney/Default/button_square_gradient.png" id="6_yscms"]
+[ext_resource type="Texture2D" uid="uid://cdvr7ex86qbqg" path="res://Assets/Icons/bubble_icon.png" id="7_x77gn"]
 
 [node name="MachineItemShop" type="MarginContainer"]
-custom_minimum_size = Vector2(300, 400)
+custom_minimum_size = Vector2(300, 450)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -20,7 +21,6 @@ offset_right = 150.0
 offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_vertical = 3
 theme = ExtResource("1_6g76e")
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -98,5 +98,9 @@ text = "Very very bad"
 [node name="MachineBuy" type="Button" parent="NinePatchRect/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Acheter
+text = "3000
 "
+icon = ExtResource("7_x77gn")
+alignment = 0
+expand_icon = true
+text_direction = 1

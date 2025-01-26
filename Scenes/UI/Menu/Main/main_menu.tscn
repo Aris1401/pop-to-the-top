@@ -1,19 +1,36 @@
-[gd_scene load_steps=25 format=4 uid="uid://cf70gs06t88pq"]
+[gd_scene load_steps=36 format=4 uid="uid://cf70gs06t88pq"]
 
 [ext_resource type="Theme" uid="uid://b7l0v0hm42k7u" path="res://pop-to-the-top-theme.tres" id="1_gouyc"]
 [ext_resource type="Script" uid="uid://c4jrc560ra7jc" path="res://Scenes/UI/Menu/Main/main_menu.gd" id="1_xgbae"]
 [ext_resource type="FontFile" uid="uid://qk1dmr1w8qfx" path="res://Assets/Fonts/Poppins-Bold.ttf" id="2_u3584"]
+[ext_resource type="Shader" uid="uid://cpt17vnbf7qnm" path="res://Scenes/UI/Menu/Main/main_menu_button.gdshader" id="3_bj4iv"]
 [ext_resource type="Shader" uid="uid://bp55tvxh6thkd" path="res://Scenes/Asteroid/asteroid.tres" id="3_kowf5"]
 [ext_resource type="Texture2D" uid="uid://dmelg4us4iu3e" path="res://Assets/Kenney/Default/button_square_line.png" id="4_jhyt5"]
 [ext_resource type="Material" uid="uid://c5lkm3r540jxx" path="res://Assets/Asteroid/RockMaterial.tres" id="4_xgbae"]
+[ext_resource type="PackedScene" uid="uid://cl2btjjggapkx" path="res://Scenes/SFX/menu_sound_player.tscn" id="5_4myyc"]
 [ext_resource type="Texture2D" uid="uid://c07ldmbdt04fv" path="res://Assets/Kenney/Default/button_square_gradient.png" id="5_hfyd4"]
 [ext_resource type="Material" uid="uid://behtmitjcovtf" path="res://Assets/Asteroid/Vfx.tres" id="5_jhyt5"]
+[ext_resource type="Shader" uid="uid://6kfx1wwoaqb0" path="res://Scenes/UI/Menu/Main/main_menu.gdshader" id="5_y8ynk"]
+[ext_resource type="AudioStream" uid="uid://0hkgn3my2qr3" path="res://Assets/Sounds/Menu/button-hover.mp3" id="6_sjpcb"]
+[ext_resource type="AudioStream" uid="uid://dkkpu4iolscqk" path="res://Assets/Sounds/Menu/button-click.mp3" id="7_ng6ce"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_drqrk"]
+shader = ExtResource("3_bj4iv")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bj4iv"]
+shader = ExtResource("5_y8ynk")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xgbae"]
 albedo_color = Color(0.280461, 0.396153, 0.179087, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_jhyt5"]
 material = SubResource("StandardMaterial3D_xgbae")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hfyd4"]
+albedo_color = Color(0.0207407, 0.042529, 0.0085737, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_y8ynk"]
+material = SubResource("StandardMaterial3D_hfyd4")
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_u3584"]
 sky_top_color = Color(0.381795, 0.186338, 0.225345, 1)
@@ -30,6 +47,10 @@ background_mode = 2
 background_color = Color(0.238891, 0.474724, 0.590325, 1)
 sky = SubResource("Sky_m3qne")
 glow_enabled = true
+fog_light_color = Color(0.616532, 0.317721, 0.269086, 1)
+adjustment_enabled = true
+adjustment_brightness = 1.2
+adjustment_saturation = 1.2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2jfxq"]
 
@@ -180,17 +201,24 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_onp06")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y8ynk"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hfyd4"]
+material = SubResource("StandardMaterial3D_y8ynk")
+
 [node name="MainMenuBackground" type="Node3D"]
 
 [node name="MainMenu" type="CanvasLayer" parent="." node_paths=PackedStringArray("_play_button", "_quit_button", "_how_to_button", "_menu_screen", "_how_to_screen", "_progress_screen", "_progress_bar")]
 script = ExtResource("1_xgbae")
-_play_button = NodePath("Menu/VBoxContainer/VBoxContainer/PlayButton")
-_quit_button = NodePath("Menu/VBoxContainer/VBoxContainer/QuitButton")
-_how_to_button = NodePath("Menu/VBoxContainer/VBoxContainer/HowToButton")
+_play_button = NodePath("Menu/ColorRect/MarginContainer/VBoxContainer/VBoxContainer/PlayButton")
+_quit_button = NodePath("Menu/ColorRect/MarginContainer/VBoxContainer/VBoxContainer/QuitButton")
+_how_to_button = NodePath("Menu/ColorRect/MarginContainer/VBoxContainer/VBoxContainer/HowToButton")
 _menu_screen = NodePath("Menu")
 _how_to_screen = NodePath("HowToPlay")
 _progress_screen = NodePath("Progress")
-_progress_bar = NodePath("Progress/VBoxContainer/LoadingBar")
+_progress_bar = NodePath("Progress/ColorRect/MarginContainer/VBoxContainer/LoadingBar")
 
 [node name="Menu" type="MarginContainer" parent="MainMenu"]
 anchors_preset = 15
@@ -199,42 +227,60 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_gouyc")
+
+[node name="ColorRect" type="ColorRect" parent="MainMenu/Menu"]
+material = SubResource("ShaderMaterial_drqrk")
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MainMenu/Menu/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/margin_left = 40
 theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 40
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/Menu"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/Menu/ColorRect/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 2
 
-[node name="Titre" type="Label" parent="MainMenu/Menu/VBoxContainer"]
+[node name="Titre" type="Label" parent="MainMenu/Menu/ColorRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_u3584")
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 62
 text = "pop to the top"
 uppercase = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/Menu/VBoxContainer"]
-custom_minimum_size = Vector2(350, 0)
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/Menu/ColorRect/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(450, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="PlayButton" type="Button" parent="MainMenu/Menu/VBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(300, 50)
+[node name="PlayButton" type="Button" parent="MainMenu/Menu/ColorRect/MarginContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 70)
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
-text = "Jouer"
+text = "PLAY"
 
-[node name="HowToButton" type="Button" parent="MainMenu/Menu/VBoxContainer/VBoxContainer"]
+[node name="HowToButton" type="Button" parent="MainMenu/Menu/ColorRect/MarginContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-text = "Comment jouer ?"
+text = "How to play ?"
 
-[node name="QuitButton" type="Button" parent="MainMenu/Menu/VBoxContainer/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="MainMenu/Menu/ColorRect/MarginContainer/VBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-text = "Quitter"
+text = "Quit"
+
+[node name="MenuSoundPlayer" parent="MainMenu/Menu" node_paths=PackedStringArray("parent") instance=ExtResource("5_4myyc")]
+parent = NodePath("../ColorRect/MarginContainer/VBoxContainer/VBoxContainer")
+button_on_hover_sound = ExtResource("6_sjpcb")
+button_on_click_sound = ExtResource("7_ng6ce")
 
 [node name="HowToPlay" type="MarginContainer" parent="MainMenu"]
 visible = false
@@ -243,6 +289,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 30
@@ -281,16 +328,37 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_u3584")
 theme_override_font_sizes/font_size = 32
-text = "Comment jouer ?"
+text = "How to play ?"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="MainMenu/HowToPlay/HBoxContainer/NinePatchRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-text = "Votre but est d'arreter l'asteroide de s'ecraser a partir de vos machines."
+text = "- Produce Bubbles: Press Left Mouse Button (LMB) to manually produce bubbles. Your goal is to match the required bubble count to keep the asteroid from causing damage.
+
+- Enter the Shop: Press M to open the shop, where you can spend bubbles to buy machines that automate bubble production.
+
+- Place Machines: After purchasing a machine, press LMB to place it in the world. Use R to rotate the machine before finalizing its position.
+
+- Survive and Score: Your ultimate goal is to achieve the highest score by lasting as long as possible and producing the most bubbles, all while avoiding damage from the asteroid.
+
+Good luck, and may your bubbles save the day!
+"
 fit_content = true
 
 [node name="Progress" type="MarginContainer" parent="MainMenu"]
 visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="MainMenu/Progress"]
+material = SubResource("ShaderMaterial_bj4iv")
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MainMenu/Progress/ColorRect"]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -301,11 +369,11 @@ theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 40
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/Progress"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/Progress/ColorRect/MarginContainer"]
 layout_mode = 2
 alignment = 2
 
-[node name="LoadingBar" type="TextureProgressBar" parent="MainMenu/Progress/VBoxContainer"]
+[node name="LoadingBar" type="TextureProgressBar" parent="MainMenu/Progress/ColorRect/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 nine_patch_stretch = true
@@ -315,11 +383,16 @@ stretch_margin_right = 5
 stretch_margin_bottom = 5
 texture_under = ExtResource("5_hfyd4")
 texture_progress = ExtResource("5_hfyd4")
+tint_under = Color(1, 1, 1, 0.545098)
 tint_progress = Color(0, 0.80211, 0.479999, 1)
 
 [node name="Ground" type="MeshInstance3D" parent="."]
 transform = Transform3D(5.25907, 0, 0, 0, 0.954593, -0.154901, 0, 0.220227, 0.671433, 0.392438, 0.0722043, 3.93715)
 mesh = SubResource("PlaneMesh_jhyt5")
+
+[node name="Ground2" type="MeshInstance3D" parent="."]
+transform = Transform3D(3.93881, 0.204496, -0.224285, -1.65144, 0.487739, -0.534938, 2.54571e-07, 0.825041, 0.371831, -0.777336, 0.329101, 1.30476)
+mesh = SubResource("PlaneMesh_y8ynk")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.925297, -0.300559, -0.231279, 0.138305, 0.835274, -0.532155, 0.353126, 0.460414, 0.814445, -0.149794, 0.0853935, 4.34001)
@@ -358,5 +431,36 @@ skeleton = NodePath("")
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.289366, 0.957219, 0, -0.957219, -0.289366, 0.373357, 1.10113, 3.51299)
 light_color = Color(1, 0.777617, 0.631055, 1)
-light_energy = 2.811
+light_energy = 6.283
+light_indirect_energy = 0.0
 spot_angle = 17.7127
+
+[node name="City" type="Node3D" parent="."]
+
+[node name="Building" type="MeshInstance3D" parent="City"]
+transform = Transform3D(0.355531, 4.11589, -0.88229, -0.23781, 6.15336, 0.590151, 0.497373, 2.20627e-07, 0.912845, 5.69275, 0.545798, 0.107769)
+mesh = SubResource("BoxMesh_hfyd4")
+
+[node name="Building2" type="MeshInstance3D" parent="City"]
+transform = Transform3D(0.355531, 4.11589, -0.88229, -0.23781, 6.15336, 0.590151, 0.497373, 2.20627e-07, 0.912845, 6.75401, -0.676355, 0.107769)
+mesh = SubResource("BoxMesh_hfyd4")
+
+[node name="Building3" type="MeshInstance3D" parent="City"]
+transform = Transform3D(0.355531, 4.11589, -0.88229, -0.23781, 6.15336, 0.590151, 0.497373, 2.20627e-07, 0.912845, 6.75401, 0.297971, -1.53412)
+mesh = SubResource("BoxMesh_hfyd4")
+
+[node name="Building4" type="MeshInstance3D" parent="City"]
+transform = Transform3D(0.355531, 4.11589, -0.88229, -0.23781, 6.15336, 0.590151, 0.497373, 2.20627e-07, 0.912845, 6.75401, 1.19741, -3.42988)
+mesh = SubResource("BoxMesh_hfyd4")
+
+[node name="Building5" type="MeshInstance3D" parent="City"]
+transform = Transform3D(0.355531, 4.11589, -0.88229, -0.23781, 6.15336, 0.590151, 0.497373, 2.20627e-07, 0.912845, 4.39233, -0.804839, -2.78935)
+mesh = SubResource("BoxMesh_hfyd4")
+
+[node name="Building6" type="MeshInstance3D" parent="City"]
+transform = Transform3D(0.355531, 4.11589, -0.88229, -0.23781, 6.15336, 0.590151, 0.497373, 2.20627e-07, 0.912845, 3.97202, -1.82919, 0.873554)
+mesh = SubResource("BoxMesh_hfyd4")
+
+[node name="Building7" type="MeshInstance3D" parent="City"]
+transform = Transform3D(0.562356, 4.13131, -1.43018, -0.376152, 6.17641, 0.956628, 0.786714, 2.21453e-07, 1.47971, 2.41173, -0.813231, -4.14804)
+mesh = SubResource("BoxMesh_hfyd4")

@@ -4,6 +4,8 @@ class_name MachineShop
 @export var machine_shop_informations : Array[MachineItemShopInformation]
 
 # References
+@export var _menu_sound_player : MenuSoundPlayer
+
 @export var _machine_items_container : HBoxContainer
 @export var _bubble_count_label : Label
 var _ui : UI
@@ -15,7 +17,7 @@ const MACHINE_ITEM_SHOP = preload("res://Scenes/UI/MachineItemShop/machine_item_
 signal bought_item(machine_item : MachineItemShopInformation)
 
 func populate_machine_shop(bubble_amount):
-	_bubble_count_label.text = var_to_str(bubble_amount)
+	_bubble_count_label.text = var_to_str(int(bubble_amount))
 	
 	for current_machine_items in _machine_items_container.get_children():
 		current_machine_items.queue_free()
@@ -26,9 +28,11 @@ func populate_machine_shop(bubble_amount):
 		
 		machine_item_shop.create(machine_item, self, bubble_amount)
 		machine_item_shop.buy_item.connect(_on_buy_item)
+		
+		_menu_sound_player.bind_button(machine_item_shop.machine_buy)
 
 func update_machine_shop(bubble_amount):
-	_bubble_count_label.text = var_to_str(bubble_amount)
+	_bubble_count_label.text = var_to_str(int(bubble_amount))
 	
 	for machine_item in _machine_items_container.get_children():
 		if machine_item is MachineItemShop:

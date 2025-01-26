@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cl2btjjggapkx"]
+
+[ext_resource type="Script" uid="uid://ugia7agkyhdm" path="res://Scenes/SFX/menu_sound_player.gd" id="1_t6fvy"]
+
+[node name="MenuSoundPlayer" type="Node2D"]
+script = ExtResource("1_t6fvy")

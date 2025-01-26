@@ -22,6 +22,11 @@ class_name UI
 # Game Over
 @export var _game_over_screen : GameOverScreen
 
+# ------ Controls
+@export_category("Player Controls")
+@export var player_normal_controls_screen : VBoxContainer
+@export var player_building_controls_screen : VBoxContainer
+
 # Signals
 # Player interface
 signal player_interface_opened
@@ -45,6 +50,10 @@ func _ready() -> void:
 	
 	# Connecting signals from the shop
 	_machine_shop.bought_item.connect(_on_bought_item)
+	
+	# Hiding some menus at start
+	_machine_shop.hide()
+	_game_over_screen.hide()
 
 #region Player Interface
 func hide_player_interface():
@@ -127,4 +136,14 @@ func hide_game_over_screen():
 	_game_over_screen.hide()
 	game_over_closed.emit()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+#endregion
+
+#region Player Controls
+func show_player_normal_controls_screen():
+	player_building_controls_screen.hide()
+	player_normal_controls_screen.show()
+
+func show_player_building_controls_screen():
+	player_building_controls_screen.show()
+	player_normal_controls_screen.hide()
 #endregion

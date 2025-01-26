@@ -1,1 +1,5 @@
 Background Music: Music by <a href="https://pixabay.com/fr/users/niknet_art-46104493/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=274375">NiKneT_Art</a> from <a href="https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=274375">Pixabay</a>
+
+Button click: Sound Effect by <a href="https://pixabay.com/users/freesoundeffects-48326557/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=289742">freesoundeffects</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=289742">Pixabay</a>
+
+Button hover: Sound Effect by <a href="https://pixabay.com/users/soundreality-31074404/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=154180">Jurij</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=154180">Pixabay</a>

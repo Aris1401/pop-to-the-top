@@ -48,9 +48,3 @@ func _on_player_state_changed(last_state, next_state):
 		is_active = false
 	else:
 		is_active = true
-
-func _process(delta: float) -> void:
-	ImGui.Begin("Bubble Maker State")
-	ImGui.Text("Last State: " + var_to_str(bubble_producer.last_state))
-	ImGui.Text("Current State: " + var_to_str(bubble_producer.current_state))
-	ImGui.End()

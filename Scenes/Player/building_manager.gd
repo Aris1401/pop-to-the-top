@@ -23,6 +23,7 @@ func _ready() -> void:
 	
 	_player.state_changed.connect(_on_player_state_changed)
 	_player._player_inputs.fired.connect(_on_fire)
+	_player._player_inputs.request_rotate.connect(_on_request_rotate)
 	
 	_building_cooldown_timer.timeout.connect(_on_building_cooldown_timeout)
 
@@ -60,6 +61,11 @@ func _on_fire():
 		if machine_blueprint and machine_blueprint.can_build:
 			machine_blueprint.build(_player._game)
 			free_building()
+
+func _on_request_rotate():
+	if is_active:
+		if machine_blueprint:
+			machine_blueprint.rotate_blueprint()
 
 func _on_building_cooldown_timeout():
 	_player.change_state(_player.PlayerStates.NORMAL)

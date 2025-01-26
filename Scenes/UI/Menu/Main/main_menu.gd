@@ -22,6 +22,9 @@ var is_loading : bool = false
 func _ready() -> void:
 	_play_button.pressed.connect(_on_play_button_clicked)
 	_quit_button.pressed.connect(_on_quit_button_clicked)
+	_how_to_button.pressed.connect(_on_how_to_button_clicked)
+	
+	_how_to_screen.hide()
 
 func _on_play_button_clicked():
 	get_tree().paused = false
@@ -42,6 +45,12 @@ func _process(delta: float) -> void:
 		if scene_load_status == ResourceLoader.THREAD_LOAD_LOADED:
 			var game_scene = ResourceLoader.load_threaded_get(game_path)
 			get_tree().change_scene_to_packed(game_scene)
+
+func _on_how_to_button_clicked():
+	if not _how_to_screen.visible:
+		_how_to_screen.show()
+	else:
+		_how_to_screen.hide()
 
 func _on_quit_button_clicked():
 	get_tree().quit()

@@ -1,20 +1,27 @@
-[gd_scene load_steps=22 format=3 uid="uid://b345bmt21ffk5"]
+[gd_scene load_steps=29 format=3 uid="uid://b345bmt21ffk5"]
 
 [ext_resource type="Texture2D" uid="uid://dbcglqwbo4cdy" path="res://Assets/Crosshair/crosshair.png" id="1_ahcct"]
 [ext_resource type="Script" uid="uid://bs3jwigq0yc2x" path="res://Scenes/UI/ui.gd" id="1_de23q"]
 [ext_resource type="Theme" uid="uid://b7l0v0hm42k7u" path="res://pop-to-the-top-theme.tres" id="2_mbl0m"]
 [ext_resource type="Texture2D" uid="uid://byvvd8sgpjy5w" path="res://Assets/Kenney/bar_round_gloss_large_m.png" id="3_fo61o"]
+[ext_resource type="Texture2D" uid="uid://cdvr7ex86qbqg" path="res://Assets/Icons/bubble_icon.png" id="4_56q1t"]
 [ext_resource type="Texture2D" uid="uid://dw6t6a8qmel1x" path="res://Assets/Kenney/Green/Default/bar_round_gloss_large_m.png" id="4_alcrr"]
 [ext_resource type="Script" uid="uid://caw4t7t20r6e" path="res://Scenes/UI/MachineShop/machine_shop.gd" id="5_alcrr"]
-[ext_resource type="Texture2D" uid="uid://8jwsyk1hpmai" path="res://Assets/Bubble/11651850.png" id="5_fy0us"]
 [ext_resource type="Script" uid="uid://oterb7nnmu3f" path="res://Scenes/ShopInformations/machine_item_shop_information.gd" id="6_duuxe"]
 [ext_resource type="Resource" uid="uid://burtydbwalxag" path="res://Scenes/Machines/Bubbler/bubbler_shop_information.tres" id="7_jfwrg"]
+[ext_resource type="Texture2D" uid="uid://crs5pkwcl1ffr" path="res://Assets/Icons/bubble_shop.png" id="8_fevae"]
+[ext_resource type="Texture2D" uid="uid://hu3krrh36xvb" path="res://Assets/Icons/bubble_lmb.png" id="9_ny3ap"]
 [ext_resource type="Script" uid="uid://yqrmpdka5duy" path="res://Scenes/UI/game_over_screen.gd" id="9_pmm6b"]
 [ext_resource type="Texture2D" uid="uid://ds5xxfklxdf5f" path="res://Assets/Kenney/bar_square_large_square.png" id="9_s3gqk"]
+[ext_resource type="Texture2D" uid="uid://yt4kwllw4f5i" path="res://Assets/Icons/bubble_place_build.png" id="10_vqjbf"]
 [ext_resource type="PackedScene" uid="uid://bv7nxwb8qaaub" path="res://Scenes/UI/MachineItemShop/machine_item_shop.tscn" id="10_vy225"]
+[ext_resource type="Texture2D" uid="uid://dseml2elgm33j" path="res://Assets/Icons/bubble_rorate_build.png" id="11_cqvjp"]
 [ext_resource type="FontFile" uid="uid://qk1dmr1w8qfx" path="res://Assets/Fonts/Poppins-Bold.ttf" id="11_h6tq4"]
 [ext_resource type="Texture2D" uid="uid://dmelg4us4iu3e" path="res://Assets/Kenney/Default/button_square_line.png" id="11_t7te2"]
 [ext_resource type="Shader" uid="uid://ds6byu1xntl0" path="res://Scenes/UI/damage_overlay.gdshader" id="15_t7te2"]
+[ext_resource type="PackedScene" uid="uid://cl2btjjggapkx" path="res://Scenes/SFX/menu_sound_player.tscn" id="18_cqvjp"]
+[ext_resource type="AudioStream" uid="uid://0hkgn3my2qr3" path="res://Assets/Sounds/Menu/button-hover.mp3" id="19_1eb8u"]
+[ext_resource type="AudioStream" uid="uid://dkkpu4iolscqk" path="res://Assets/Sounds/Menu/button-click.mp3" id="20_vhchw"]
 
 [sub_resource type="Gradient" id="Gradient_t7te2"]
 offsets = PackedFloat32Array(0, 0.713235, 1)
@@ -34,6 +41,21 @@ shader_parameter/MaxRadius = 0.0
 shader_parameter/PulseSpeed = 2.0
 shader_parameter/PulsePower = 0.2
 
+[sub_resource type="Animation" id="Animation_ny3ap"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DamageIndicator/DamagerOverlay:material:shader_parameter/EffectStrength")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
 [sub_resource type="Animation" id="Animation_fevae"]
 resource_name = "damage_taken"
 length = 0.5
@@ -50,28 +72,13 @@ tracks/0/keys = {
 "values": [0.0, 1.0, 0.0]
 }
 
-[sub_resource type="Animation" id="Animation_ny3ap"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("DamageIndicator/DamagerOverlay:material:shader_parameter/EffectStrength")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vqjbf"]
 _data = {
 &"RESET": SubResource("Animation_ny3ap"),
 &"damage_taken": SubResource("Animation_fevae")
 }
 
-[node name="UI" type="CanvasLayer" node_paths=PackedStringArray("_animation_player", "_bubble_count", "_timer", "_bubble_amount_progress", "_damage_progress_container", "_damage_progress", "_player_interface", "_machine_shop", "_game_over_screen")]
+[node name="UI" type="CanvasLayer" node_paths=PackedStringArray("_animation_player", "_bubble_count", "_timer", "_bubble_amount_progress", "_damage_progress_container", "_damage_progress", "_player_interface", "_machine_shop", "_game_over_screen", "player_normal_controls_screen", "player_building_controls_screen")]
 script = ExtResource("1_de23q")
 _animation_player = NodePath("AnimationPlayer")
 _bubble_count = NodePath("PlayerInterface/BubbleCount/MarginContainer/HBoxContainer/BubbleCount")
@@ -82,6 +89,8 @@ _damage_progress = NodePath("PlayerInterface/Timer/VBoxContainer/DamagerProgress
 _player_interface = NodePath("PlayerInterface")
 _machine_shop = NodePath("MachineShop")
 _game_over_screen = NodePath("GameOver")
+player_normal_controls_screen = NodePath("PlayerInterface/Controls/HBoxContainer/NormalControls")
+player_building_controls_screen = NodePath("PlayerInterface/Controls/HBoxContainer/BuildControls")
 
 [node name="PlayerInterface" type="Control" parent="."]
 layout_mode = 3
@@ -152,7 +161,7 @@ alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="PlayerInterface/BubbleCount/MarginContainer/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("5_fy0us")
+texture = ExtResource("4_56q1t")
 expand_mode = 3
 
 [node name="BubbleCount" type="Label" parent="PlayerInterface/BubbleCount/MarginContainer/HBoxContainer"]
@@ -200,6 +209,7 @@ stretch_margin_right = 5
 stretch_margin_bottom = 5
 texture_under = ExtResource("3_fo61o")
 texture_progress = ExtResource("4_alcrr")
+tint_under = Color(1, 1, 1, 0.47451)
 
 [node name="DamagerProgressContainer" type="MarginContainer" parent="PlayerInterface/Timer/VBoxContainer"]
 visible = false
@@ -217,9 +227,58 @@ stretch_margin_right = 10
 stretch_margin_bottom = 10
 texture_under = ExtResource("3_fo61o")
 texture_progress = ExtResource("3_fo61o")
+tint_under = Color(1, 1, 1, 0.478431)
 tint_progress = Color(1, 0.211617, 0.371197, 1)
 
-[node name="MachineShop" type="Control" parent="." node_paths=PackedStringArray("_machine_items_container", "_bubble_count_label")]
+[node name="Controls" type="MarginContainer" parent="PlayerInterface"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -182.0
+offset_top = -330.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerInterface/Controls"]
+layout_mode = 2
+
+[node name="NormalControls" type="VBoxContainer" parent="PlayerInterface/Controls/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ShopControl" type="TextureRect" parent="PlayerInterface/Controls/HBoxContainer/NormalControls"]
+layout_mode = 2
+texture = ExtResource("8_fevae")
+expand_mode = 4
+
+[node name="LMBControl" type="TextureRect" parent="PlayerInterface/Controls/HBoxContainer/NormalControls"]
+layout_mode = 2
+texture = ExtResource("9_ny3ap")
+expand_mode = 4
+
+[node name="BuildControls" type="VBoxContainer" parent="PlayerInterface/Controls/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RotateBuildControl" type="TextureRect" parent="PlayerInterface/Controls/HBoxContainer/BuildControls"]
+layout_mode = 2
+texture = ExtResource("11_cqvjp")
+expand_mode = 4
+
+[node name="PlaceBuildControl" type="TextureRect" parent="PlayerInterface/Controls/HBoxContainer/BuildControls"]
+layout_mode = 2
+texture = ExtResource("10_vqjbf")
+expand_mode = 4
+
+[node name="MachineShop" type="Control" parent="." node_paths=PackedStringArray("_menu_sound_player", "_machine_items_container", "_bubble_count_label")]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -230,6 +289,7 @@ grow_vertical = 2
 theme = ExtResource("2_mbl0m")
 script = ExtResource("5_alcrr")
 machine_shop_informations = Array[ExtResource("6_duuxe")]([ExtResource("7_jfwrg")])
+_menu_sound_player = NodePath("MenuSoundPlayer")
 _machine_items_container = NodePath("MarginContainer/Panel/MarginContainer/VBoxContainer/BoxContainer/ColorRect/MarginContainer/HBoxContainer")
 _bubble_count_label = NodePath("MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer2/Container/NinePatchRect/MarginContainer/HBoxContainer/BubbleCount")
 
@@ -283,7 +343,7 @@ text = "SHOP"
 layout_mode = 2
 
 [node name="NinePatchRect" type="NinePatchRect" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer2/Container"]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(130, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("9_s3gqk")
@@ -299,17 +359,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer2/Container/NinePatchRect/MarginContainer"]
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer2/Container/NinePatchRect/MarginContainer/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("5_fy0us")
+texture = ExtResource("4_56q1t")
 expand_mode = 2
 
 [node name="BubbleCount" type="Label" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer2/Container/NinePatchRect/MarginContainer/HBoxContainer"]
@@ -346,11 +406,16 @@ theme_override_constants/margin_bottom = 10
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/BoxContainer/ColorRect/MarginContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 0
 alignment = 1
 
 [node name="MachineItemShop" parent="MachineShop/MarginContainer/Panel/MarginContainer/VBoxContainer/BoxContainer/ColorRect/MarginContainer/HBoxContainer" instance=ExtResource("10_vy225")]
 layout_mode = 2
+
+[node name="MenuSoundPlayer" parent="MachineShop" node_paths=PackedStringArray("parent") instance=ExtResource("18_cqvjp")]
+parent = NodePath("../MarginContainer/Panel/MarginContainer/VBoxContainer/BoxContainer/ColorRect/MarginContainer/HBoxContainer")
+button_on_hover_sound = ExtResource("19_1eb8u")
+button_on_click_sound = ExtResource("20_vhchw")
 
 [node name="GameOver" type="Control" parent="."]
 visible = false
@@ -463,13 +528,18 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-text = "Recommencer"
+text = "Retry"
 
 [node name="MenuButton" type="Button" parent="GameOver/MarginContainer/NinePatchRect/MarginContainer/VBoxContainer/ColorRect/MarginContainer/VBoxContainer/Control/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-text = "Revenir vers le menu principal"
+text = "Back to the main menu"
+
+[node name="MenuSoundPlayer" parent="GameOver" node_paths=PackedStringArray("parent") instance=ExtResource("18_cqvjp")]
+parent = NodePath("../MarginContainer/NinePatchRect/MarginContainer/VBoxContainer/ColorRect/MarginContainer/VBoxContainer/Control/VBoxContainer")
+button_on_hover_sound = ExtResource("19_1eb8u")
+button_on_click_sound = ExtResource("20_vhchw")
 
 [node name="DamageIndicator" type="Control" parent="."]
 layout_mode = 3

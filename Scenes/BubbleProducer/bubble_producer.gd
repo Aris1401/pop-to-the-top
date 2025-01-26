@@ -13,11 +13,17 @@ var current_state : BubbleProducerState = BubbleProducerState.IDLE
 var last_state : BubbleProducerState
 
 # Informations
+@export_category("Bubble Producer Informations")
 @export var bubble_rates : BaseBubbleRates
 @export var bubble_vfx : BubbleVFX
 @export var bubble_sfx : AudioStreamPlayer3D
+@export_subgroup("Animations")
+@export var _animation_player : AnimationPlayer
+@export var animation_producing_name : StringName
+@export var animation_idle_name : StringName
 
 # References
+@export_category("References")
 @export var _rate_timer : Timer
 
 func produce():
@@ -39,6 +45,10 @@ func produce():
 	if bubble_sfx and not bubble_sfx.playing:
 		bubble_sfx.play()
 	
+	if _animation_player:
+		if not (_animation_player.current_animation == animation_producing_name and _animation_player.is_playing()):
+			_animation_player.play(animation_producing_name)
+	
 	# Changing the state
 	change_state(BubbleProducerState.PRODUCING)
 
@@ -54,6 +64,9 @@ func end():
 	
 	if bubble_sfx:
 		bubble_sfx.stop()
+	
+	if _animation_player:
+		_animation_player.play(animation_idle_name)
 	
 	change_state(BubbleProducerState.IDLE)
 

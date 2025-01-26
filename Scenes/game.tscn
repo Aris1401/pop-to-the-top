@@ -1,13 +1,17 @@
 [gd_scene load_steps=10 format=3 uid="uid://cgnj1wxfnhr1x"]
 
 [ext_resource type="Script" uid="uid://bt3ci5lsgxse2" path="res://Scenes/game.gd" id="1_3dryh"]
-[ext_resource type="PackedScene" uid="uid://b7i74urpbvylu" path="res://Scenes/World/prototype_level.tscn" id="1_ebmjs"]
 [ext_resource type="PackedScene" uid="uid://dmfi1lalc6i3l" path="res://Scenes/Player/player.tscn" id="2_qxrlw"]
 [ext_resource type="Script" uid="uid://dntj28mt6klsn" path="res://Scenes/GameManagers/damage_manager.gd" id="2_wowpa"]
 [ext_resource type="PackedScene" uid="uid://b345bmt21ffk5" path="res://Scenes/UI/ui.tscn" id="3_wrm1d"]
+[ext_resource type="PackedScene" uid="uid://du86o5aq0uxte" path="res://Scenes/World/level.tscn" id="6_i6g32"]
 [ext_resource type="AudioStream" uid="uid://b07a4dm0mi01n" path="res://Assets/Sounds/hit_explosion.wav" id="7_1l0tm"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wowpa"]
+sky_top_color = Color(0.189057, 0.388859, 0.720027, 1)
+sky_horizon_color = Color(0.299583, 0.399879, 0.822177, 1)
+ground_bottom_color = Color(0.419209, 0.170181, 0.0494303, 1)
+ground_horizon_color = Color(0.619967, 0.227442, 0.392492, 1)
 
 [sub_resource type="Sky" id="Sky_wrm1d"]
 sky_material = SubResource("ProceduralSkyMaterial_wowpa")
@@ -16,7 +20,18 @@ sky_material = SubResource("ProceduralSkyMaterial_wowpa")
 background_mode = 2
 sky = SubResource("Sky_wrm1d")
 ambient_light_color = Color(0.379982, 0.633415, 0.767615, 1)
+ssao_enabled = true
+sdfgi_use_occlusion = true
 glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(0.352698, 0.174981, 0.0897284, 1)
+fog_density = 0.0198
+volumetric_fog_density = 0.0304
+volumetric_fog_albedo = Color(0.585365, 0.276784, 0.290539, 1)
+volumetric_fog_emission = Color(0.343818, 0.273778, 0.140861, 1)
+adjustment_enabled = true
+adjustment_brightness = 1.2
+adjustment_saturation = 1.2
 
 [node name="Game" type="Node3D" node_paths=PackedStringArray("damage_manager", "_player", "_ui", "_damage_hit_sfx")]
 process_mode = 3
@@ -30,11 +45,9 @@ _damage_hit_sfx = NodePath("DamageHit")
 process_mode = 1
 script = ExtResource("2_wowpa")
 
-[node name="PrototypeLevel" parent="." instance=ExtResource("1_ebmjs")]
-process_mode = 1
-
 [node name="Player" parent="." instance=ExtResource("2_qxrlw")]
 process_mode = 1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.9994, -16.701)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3dryh")
@@ -44,3 +57,5 @@ environment = SubResource("Environment_3dryh")
 [node name="DamageHit" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("7_1l0tm")
 volume_db = -10.0
+
+[node name="Level" parent="." instance=ExtResource("6_i6g32")]

@@ -43,6 +43,7 @@ func _ready() -> void:
 	if _player:
 		_player._game = self
 		_player._player_inputs.shop.connect(_on_shop_pressed)
+		_player.state_changed.connect(_on_player_change_state)
 	
 	if _asteroid:
 		_asteroid._game = self
@@ -82,10 +83,6 @@ func game_state_to_str():
 
 func _process(delta: float) -> void:
 	update_time(delta)
-	
-	ImGui.Begin("Game State")
-	ImGui.Text("Game state: " + game_state_to_str())
-	ImGui.End()
 
 #region TIME
 func update_time(delta):
@@ -212,4 +209,14 @@ func _on_game_over_screen_closed():
 func _on_request_retry():
 	get_tree().paused = false
 	get_tree().reload_current_scene()
+#endregion
+
+#region Player States
+func _on_player_change_state(last_state, next_state):
+	if next_state == _player.PlayerStates.BUILDING:
+		_ui.show_player_building_controls_screen()
+		return
+	if next_state == _player.PlayerStates.NORMAL:
+		_ui.show_player_normal_controls_screen()
+		return
 #endregion
