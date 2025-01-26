@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=4 uid="uid://cf70gs06t88pq"]
+[gd_scene load_steps=37 format=4 uid="uid://cf70gs06t88pq"]
 
 [ext_resource type="Theme" uid="uid://b7l0v0hm42k7u" path="res://pop-to-the-top-theme.tres" id="1_gouyc"]
 [ext_resource type="Script" uid="uid://c4jrc560ra7jc" path="res://Scenes/UI/Menu/Main/main_menu.gd" id="1_xgbae"]
@@ -13,6 +13,7 @@
 [ext_resource type="Shader" uid="uid://6kfx1wwoaqb0" path="res://Scenes/UI/Menu/Main/main_menu.gdshader" id="5_y8ynk"]
 [ext_resource type="AudioStream" uid="uid://0hkgn3my2qr3" path="res://Assets/Sounds/Menu/button-hover.mp3" id="6_sjpcb"]
 [ext_resource type="AudioStream" uid="uid://dkkpu4iolscqk" path="res://Assets/Sounds/Menu/button-click.mp3" id="7_ng6ce"]
+[ext_resource type="PackedScene" uid="uid://d3t03ohoukenl" path="res://Scenes/VFX/Bubbles/bubbles_vfx.tscn" id="11_sjpcb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_drqrk"]
 shader = ExtResource("3_bj4iv")
@@ -210,13 +211,14 @@ material = SubResource("StandardMaterial3D_y8ynk")
 
 [node name="MainMenuBackground" type="Node3D"]
 
-[node name="MainMenu" type="CanvasLayer" parent="." node_paths=PackedStringArray("_play_button", "_quit_button", "_how_to_button", "_menu_screen", "_how_to_screen", "_progress_screen", "_progress_bar")]
+[node name="MainMenu" type="CanvasLayer" parent="." node_paths=PackedStringArray("_play_button", "_quit_button", "_how_to_button", "_menu_screen", "_how_to_screen", "_game_informations_screen", "_progress_screen", "_progress_bar")]
 script = ExtResource("1_xgbae")
 _play_button = NodePath("Menu/ColorRect/MarginContainer/VBoxContainer/VBoxContainer/PlayButton")
 _quit_button = NodePath("Menu/ColorRect/MarginContainer/VBoxContainer/VBoxContainer/QuitButton")
 _how_to_button = NodePath("Menu/ColorRect/MarginContainer/VBoxContainer/VBoxContainer/HowToButton")
 _menu_screen = NodePath("Menu")
 _how_to_screen = NodePath("HowToPlay")
+_game_informations_screen = NodePath("GameInformations")
 _progress_screen = NodePath("Progress")
 _progress_bar = NodePath("Progress/ColorRect/MarginContainer/VBoxContainer/LoadingBar")
 
@@ -386,6 +388,29 @@ texture_progress = ExtResource("5_hfyd4")
 tint_under = Color(1, 1, 1, 0.545098)
 tint_progress = Color(0, 0.80211, 0.479999, 1)
 
+[node name="GameInformations" type="MarginContainer" parent="MainMenu"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -264.0
+offset_top = -107.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainMenu/GameInformations"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 10
+text = "Version beta-0.1
+Made by aris1401_"
+horizontal_alignment = 2
+vertical_alignment = 2
+
 [node name="Ground" type="MeshInstance3D" parent="."]
 transform = Transform3D(5.25907, 0, 0, 0, 0.954593, -0.154901, 0, 0.220227, 0.671433, 0.392438, 0.0722043, 3.93715)
 mesh = SubResource("PlaneMesh_jhyt5")
@@ -413,6 +438,9 @@ skeleton = NodePath("")
 transform = Transform3D(10.5099, -12.2862, -6.45185, -1.32941, 7.16473, -15.8093, 13.8134, 10.0375, 3.38738, -0.540496, -0.0173441, 0.117553)
 mesh = SubResource("ArrayMesh_44e7f")
 skeleton = NodePath("")
+
+[node name="BubblesVFX" parent="bubble-maker - pose" instance=ExtResource("11_sjpcb")]
+transform = Transform3D(0.2, -7.45058e-09, -1.49012e-08, -1.49012e-08, 0.2, -1.49012e-08, 2.98023e-08, -1.49012e-08, 0.2, 1.63507, 2.66032, -13.9541)
 
 [node name="asteroid" type="Node3D" parent="."]
 transform = Transform3D(0.00839395, -0.609801, -0.79251, -0.82949, 0.438368, -0.346091, 0.558458, 0.660284, -0.502145, 0.206084, 1.2502, 2.44563)

@@ -16,6 +16,8 @@ var is_loading : bool = false
 
 @export var _how_to_screen : MarginContainer
 
+@export var _game_informations_screen : MarginContainer
+
 @export var _progress_screen : MarginContainer
 @export var _progress_bar : TextureProgressBar
 
@@ -31,6 +33,7 @@ func _on_play_button_clicked():
 	
 	_menu_screen.hide()
 	_how_to_screen.hide()
+	_game_informations_screen.hide()
 	
 	_progress_screen.show()
 	

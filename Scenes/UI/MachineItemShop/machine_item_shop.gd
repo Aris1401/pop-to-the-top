@@ -16,6 +16,7 @@ var _machine_shop : MachineShop
 signal buy_item(machine_item : MachineItemShop)
 
 func create(shop_informations : MachineItemShopInformation, machine_shop, bubble_amount : float):
+	machine_image.texture = shop_informations.machine_image
 	machine_name.text = shop_informations.machine_name
 	machine_description.text = shop_informations.machine_description
 	

@@ -107,6 +107,8 @@ func create_bubble(amount, lifetime):
 	
 	bubble.popped.connect(_on_bubble_popped)
 	
+	bubble.process_mode = Node.PROCESS_MODE_PAUSABLE
+	
 	self.add_child(bubble)
 	bubble.start_lifetime()
 	

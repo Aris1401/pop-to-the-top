@@ -66,6 +66,7 @@ uppercase = true
 unique_name_in_owner = true
 layout_mode = 2
 texture = ExtResource("1_5ldey")
+expand_mode = 4
 
 [node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect/MarginContainer/VBoxContainer"]
 self_modulate = Color(1, 1, 1, 0.321569)
