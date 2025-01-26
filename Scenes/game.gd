@@ -7,7 +7,8 @@ var time : float = 0.0
 enum GameStates {
 	IN_GAME,
 	IN_SHOP,
-	OVER
+	OVER,
+	PAUSED
 }
 
 var current_game_state : GameStates = GameStates.IN_GAME
@@ -44,6 +45,9 @@ func _ready() -> void:
 		_player._game = self
 		_player._player_inputs.shop.connect(_on_shop_pressed)
 		_player.state_changed.connect(_on_player_change_state)
+		
+		# Connecting player to the ui
+		_player._player_inputs.request_cancel.connect(_on_request_ui_cancel)
 	
 	if _asteroid:
 		_asteroid._game = self
@@ -67,6 +71,12 @@ func _ready() -> void:
 	_ui.game_over_closed.connect(_on_game_over_screen_closed)
 	
 	_ui._game_over_screen.request_retry.connect(_on_request_retry)
+	
+	# PAUSE MENU
+	_ui._pause_menu_screen.request_continue.connect(_on_request_continue)
+	
+	_ui.pause_closed.connect(_on_pause_menu_closed)
+	_ui.pause_opened.connect(_on_pause_menu_opened)
 	
 	# Connecting signals
 	damage_manager.limit_reached.connect(_on_damage_limit_reached)
@@ -211,6 +221,30 @@ func _on_request_retry():
 	get_tree().reload_current_scene()
 #endregion
 
+#region Pause Menu
+func _on_request_continue():
+	get_tree().paused = false
+	_ui.hide_pause_menu_screen()
+	
+	# Open all
+	_ui.show_player_interface()
+	
+func _on_pause_menu_opened():
+	current_game_state = GameStates.PAUSED
+	
+	# Close all 
+	_ui.hide_shop()
+	
+	get_tree().paused = true
+	
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func _on_pause_menu_closed():
+	current_game_state = GameStates.IN_GAME
+	
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+#endregion
+
 #region Player States
 func _on_player_change_state(last_state, next_state):
 	if next_state == _player.PlayerStates.BUILDING:
@@ -219,4 +253,12 @@ func _on_player_change_state(last_state, next_state):
 	if next_state == _player.PlayerStates.NORMAL:
 		_ui.show_player_normal_controls_screen()
 		return
+#endregion
+
+#region Inputs
+func _on_request_ui_cancel():
+	if (current_game_state == GameStates.PAUSED):
+		_ui.hide_pause_menu_screen()
+	elif (current_game_state != GameStates.PAUSED):
+		_ui.show_pause_menu_screen()
 #endregion

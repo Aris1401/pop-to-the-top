@@ -15,6 +15,7 @@ signal fired
 signal stoped_fire
 signal shop
 signal request_rotate
+signal request_cancel
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -25,6 +26,7 @@ func _process(delta: float) -> void:
 	
 	ui_cancel = Input.is_action_just_pressed("ui_cancel")
 	
+	if (Input.is_action_just_pressed("ui_cancel")): request_cancel.emit()
 	if (Input.is_action_just_pressed("fire")): fired.emit()
 	if (Input.is_action_just_released("fire")): stoped_fire.emit()
 	if (Input.is_action_just_pressed("shop")): shop.emit()

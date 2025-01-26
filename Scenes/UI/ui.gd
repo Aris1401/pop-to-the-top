@@ -22,6 +22,9 @@ class_name UI
 # Game Over
 @export var _game_over_screen : GameOverScreen
 
+# Pause menu
+@export var _pause_menu_screen : PauseMenu
+
 # ------ Controls
 @export_category("Player Controls")
 @export var player_normal_controls_screen : VBoxContainer
@@ -40,6 +43,10 @@ signal shop_closed
 signal game_over_opened
 signal game_over_closed
 
+# PAUSE
+signal pause_opened
+signal pause_closed
+
 signal bought_item_from_shop(machine_item : MachineItemShopInformation)
 
 func _ready() -> void:
@@ -54,6 +61,7 @@ func _ready() -> void:
 	# Hiding some menus at start
 	_machine_shop.hide()
 	_game_over_screen.hide()
+	_pause_menu_screen.hide()
 
 #region Player Interface
 func hide_player_interface():
@@ -146,4 +154,14 @@ func show_player_normal_controls_screen():
 func show_player_building_controls_screen():
 	player_building_controls_screen.show()
 	player_normal_controls_screen.hide()
+#endregion
+
+#region Pause Menu
+func show_pause_menu_screen():
+	_pause_menu_screen.show()
+	pause_opened.emit()
+
+func hide_pause_menu_screen():
+	_pause_menu_screen.hide()
+	pause_closed.emit()
 #endregion

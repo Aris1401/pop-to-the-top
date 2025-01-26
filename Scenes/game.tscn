@@ -45,6 +45,8 @@ _damage_hit_sfx = NodePath("DamageHit")
 process_mode = 1
 script = ExtResource("2_wowpa")
 
+[node name="TimerManager" type="Node" parent="."]
+
 [node name="Player" parent="." instance=ExtResource("2_qxrlw")]
 process_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.9994, -16.701)
