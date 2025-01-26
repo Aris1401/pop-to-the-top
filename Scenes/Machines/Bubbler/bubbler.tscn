@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=4 uid="uid://baey0snu61qk3"]
+[gd_scene load_steps=21 format=4 uid="uid://baey0snu61qk3"]
 
 [ext_resource type="Script" uid="uid://cowqqhnfujbhm" path="res://Scenes/Machines/Bubbler/bubbler.gd" id="1_4jpa8"]
 [ext_resource type="PackedScene" uid="uid://d3t03ohoukenl" path="res://Scenes/VFX/Bubbles/bubbles_vfx.tscn" id="2_5wnyu"]
 [ext_resource type="Resource" uid="uid://b8j0j7x85fyhl" path="res://Scenes/BubbleProducer/Bubbler/bubbler.tres" id="2_ew872"]
 [ext_resource type="Texture2D" uid="uid://dejflc7t2wp5" path="res://Assets/Bubbler/bb_texture.png" id="4_rx886"]
 [ext_resource type="Texture2D" uid="uid://cak25y0gwupto" path="res://Assets/Bubbler/bb_fan.png" id="5_g2y6k"]
+[ext_resource type="PackedScene" uid="uid://duf7tmtkucntq" path="res://Scenes/Interaction/interactible_component.tscn" id="6_g2y6k"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rx886"]
 resource_name = "BB_Body_Material"
@@ -191,6 +192,9 @@ _data = {
 &"working": SubResource("Animation_rx886")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_l77v8"]
+size = Vector3(1.93317, 2.04614, 1.66052)
+
 [node name="Bubbler" type="StaticBody3D" node_paths=PackedStringArray("bubble_vfx", "_animation_player", "_rate_timer")]
 script = ExtResource("1_4jpa8")
 bubble_rates = ExtResource("2_ew872")
@@ -237,3 +241,11 @@ libraries = {
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.67149, 0)
 billboard = 1
 text = "TEST"
+
+[node name="InteractibleComponent" parent="." instance=ExtResource("6_g2y6k")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractibleComponent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0218201, 1.04537, -0.00665283)
+shape = SubResource("BoxShape3D_l77v8")
+
+[connection signal="interacted" from="InteractibleComponent" to="." method="_on_interactible_component_interacted"]

@@ -29,6 +29,9 @@ var last_state : BubbleProducerState
 @export_category("References")
 @export var _rate_timer : Timer
 
+# Signals
+signal state_changed(last_state : BubbleProducerState, next_state : BubbleProducerState)
+
 func produce():
 	if not is_in_group("Machine"):
 		add_to_group("Machine")
@@ -56,9 +59,6 @@ func produce():
 	change_state(BubbleProducerState.PRODUCING)
 
 func end():
-	if _game.current_game_state != _game.GameStates.IN_GAME:
-		return
-	
 	if (current_state != BubbleProducerState.PRODUCING):
 		change_state(BubbleProducerState.IMPOSSIBLE_STATE)
 		return
@@ -86,8 +86,13 @@ func _on_rate_timer_timeout():
 		else:
 			produce()
 
+func repair():
+	produce()
+
 #region StateManager
 func change_state(state : BubbleProducerState):
+	state_changed.emit(current_state, state)
+	
 	last_state = current_state
 	current_state = state
 

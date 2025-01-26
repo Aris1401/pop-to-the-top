@@ -6,6 +6,8 @@ class_name DebugManager
 func _process(delta: float) -> void:
 	ImGui.Begin("Debug Panel")
 	
+	ImGui.Text("Game State: " + _game.game_state_to_str())
+	
 	ImGui.Text("Damage")
 	if (not _game.damage_manager.immunity and ImGui.Button("Disable Damage")):
 		_game.damage_manager.immunity = true

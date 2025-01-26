@@ -6,7 +6,8 @@ enum GameStates {
 	IN_GAME,
 	IN_SHOP,
 	OVER,
-	PAUSED
+	PAUSED,
+	IN_MACHINE_MENU
 }
 
 var current_game_state : GameStates = GameStates.IN_GAME
@@ -30,6 +31,7 @@ var total_damage : float = 0.0
 
 # Signals
 signal bubble_amount_changed(amount, required)
+signal request_machine_menu(machine : BubbleProducer)
 
 func _ready() -> void:
 	if not _player:
@@ -77,6 +79,12 @@ func _ready() -> void:
 	_ui.pause_closed.connect(_on_pause_menu_closed)
 	_ui.pause_opened.connect(_on_pause_menu_opened)
 	
+	# MACHINE MENU
+	request_machine_menu.connect(_on_request_machine_menu)
+	
+	_ui.machine_menu_opened.connect(_on_machine_menu_opened)
+	_ui.machine_menu_closed.connect(_on_machine_menu_closed)
+	
 	# Connecting signals
 	damage_manager.limit_reached.connect(_on_damage_limit_reached)
 	damage_manager.damage_dealt.connect(_on_damage_dealt)
@@ -89,6 +97,10 @@ func game_state_to_str():
 			return "In Shop"
 		2:
 			return "Game Over"
+		3:
+			return "Paused"
+		4:
+			return "Machine menu"
 
 func _process(delta: float) -> void:
 	_ui.set_timer(timer_manager.time)
@@ -143,11 +155,15 @@ func check_asteroid_completion():
 func _on_shop_pressed():
 	if current_game_state == GameStates.IN_GAME:
 		_ui.show_shop()
-	else:
+	elif current_game_state == GameStates.IN_SHOP:
 		_ui.hide_shop()
 
 func _on_shop_opened():
+	_ui.hide_machine_menu_screen()
+	
 	current_game_state = GameStates.IN_SHOP
+	
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func _on_shop_closed():
 	current_game_state = GameStates.IN_GAME
@@ -157,7 +173,7 @@ func _on_bought_item_from_shop(machine_item : MachineItemShopInformation):
 	_ui.hide_shop()
 #endregion
 
-#region Machines
+#region Machines Getter
 func get_machines_count():
 	return len(get_tree().get_nodes_in_group("Machine"))
 #endregion
@@ -194,12 +210,12 @@ func get_random_position_around_player(player_position: Vector3, radius: float) 
 
 #region Game Over Screen
 func _on_game_over_screen_opened():
-	current_game_state = GameStates.OVER
-	
 	# Close all 
 	_ui.hide_player_interface()
 	_ui.hide_shop()
 	_ui.hide_pause_menu_screen()
+	
+	current_game_state = GameStates.OVER
 	
 	get_tree().paused = true
 
@@ -220,10 +236,11 @@ func _on_request_continue():
 	_ui.show_player_interface()
 	
 func _on_pause_menu_opened():
-	current_game_state = GameStates.PAUSED
-	
 	# Close all 
 	_ui.hide_shop()
+	_ui.hide_machine_menu_screen()
+	
+	current_game_state = GameStates.PAUSED
 	
 	get_tree().paused = true
 	
@@ -251,4 +268,24 @@ func _on_request_ui_cancel():
 		_ui.hide_pause_menu_screen()
 	elif (current_game_state != GameStates.PAUSED):
 		_ui.show_pause_menu_screen()
+#endregion
+
+#region Machine Menu
+func _on_request_machine_menu(machine : BubbleProducer):
+	if not machine:
+		_ui.hide_machine_menu_screen()
+	else:
+		_ui.show_machine_menu_screen(machine)
+
+func _on_machine_menu_opened():
+	_ui.hide_shop()
+	
+	current_game_state = GameStates.IN_MACHINE_MENU
+	
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func _on_machine_menu_closed():
+	current_game_state = GameStates.IN_GAME
+	
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 #endregion

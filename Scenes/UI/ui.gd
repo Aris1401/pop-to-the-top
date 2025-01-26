@@ -25,6 +25,9 @@ class_name UI
 # Pause menu
 @export var _pause_menu_screen : PauseMenu
 
+# Machine menu
+@export var _machine_menu : MachineMenu
+
 # Iminent impact pop up
 @export var _iminent_impact_pop_up : NinePatchRect
 @export var _iminent_impact_timer : Label
@@ -51,6 +54,10 @@ signal game_over_closed
 signal pause_opened
 signal pause_closed
 
+# MACHINE MENU
+signal machine_menu_opened
+signal machine_menu_closed
+
 signal bought_item_from_shop(machine_item : MachineItemShopInformation)
 
 func _ready() -> void:
@@ -62,10 +69,14 @@ func _ready() -> void:
 	# Connecting signals from the shop
 	_machine_shop.bought_item.connect(_on_bought_item)
 	
+	# Connecting signals from machine menu
+	_machine_menu.request_close.connect(hide_machine_menu_screen)
+	
 	# Hiding some menus at start
 	_machine_shop.hide()
 	_game_over_screen.hide()
 	_pause_menu_screen.hide()
+	_machine_menu.hide()
 
 #region Player Interface
 func hide_player_interface():
@@ -181,4 +192,15 @@ func update_iminent_impact_timer(time):
 	var seconds = int(time)
 	var milliseconds = int((time - seconds) * 100)
 	_iminent_impact_timer.text = "%02d:%02d" % [seconds, int(milliseconds)]
+#endregion
+
+#region Machine Menu
+func show_machine_menu_screen(machine : BubbleProducer):
+	_machine_menu.show()
+	_machine_menu.initialize(machine)
+	machine_menu_opened.emit()
+
+func hide_machine_menu_screen():
+	_machine_menu.hide()
+	machine_menu_closed.emit()
 #endregion
