@@ -11,6 +11,7 @@ var was_shooting : bool = false
 
 # References
 @export var _player : Player
+@export var _bm_animation_player : AnimationPlayer
 
 func _ready():
 	_player._player_inputs.fired.connect(_on_fire)
@@ -57,9 +58,17 @@ func stop_fire():
 	
 	if not was_shooting:
 		return
-	
 	bubble_producer.end()
 	was_shooting = false
+
+func call_bubble_maker_wind_up():
+	_bm_animation_player.play("BubbleMaker_001|BM_wind_up")
+
+func call_bubble_maker_shoot():
+	_bm_animation_player.play("BubbleMaker_001|BM_shoot")
+
+func call_bubble_maker_end_shoot():
+	_bm_animation_player.play("BubbleMaker_001|BM_end_shoot")
 
 func _on_player_state_changed(last_state, next_state):
 	if next_state != _player.PlayerStates.NORMAL:
