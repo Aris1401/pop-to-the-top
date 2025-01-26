@@ -3,6 +3,8 @@ class_name ArmsController
 
 # Propreites
 var is_active : bool = true
+var is_shooting : bool = false
+var was_shooting : bool = false
 
 # Bubble Producer
 @export var bubble_producer : BubbleProducer
@@ -22,6 +24,8 @@ func _on_fire():
 	if not bubble_producer._game:
 		bubble_producer._game = _player._game
 	
+	is_shooting = true
+	
 	_player._animation_controller.set_condition("Movement", "is_shooting", true)
 	_player._animation_controller.set_condition("Movement", "stop_shooting", false)
 
@@ -29,6 +33,10 @@ func start_fire():
 	if not is_active:
 		return
 	
+	if not is_shooting:
+		return
+	
+	was_shooting = true
 	bubble_producer.produce()
 
 func _on_stopped_fire():
@@ -41,7 +49,17 @@ func _on_stopped_fire():
 	_player._animation_controller.set_condition("Movement", "stop_shooting", true)
 	_player._animation_controller.set_condition("Movement", "is_shooting", false)
 	
+	is_shooting = false
+
+func stop_fire():
+	if not is_active:
+		return
+	
+	if not was_shooting:
+		return
+	
 	bubble_producer.end()
+	was_shooting = false
 
 func _on_player_state_changed(last_state, next_state):
 	if next_state != _player.PlayerStates.NORMAL:

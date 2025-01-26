@@ -1,8 +1,6 @@
 extends Node3D
 class_name Game
 
-var time : float = 0.0
-
 # Game states
 enum GameStates {
 	IN_GAME,
@@ -21,6 +19,7 @@ var total_damage : float = 0.0
 # Managers
 @export_category("Managers")
 @export var damage_manager : DamageManager
+@export var timer_manager : TimerManager
 
 # References
 @export_category("References")
@@ -53,7 +52,7 @@ func _ready() -> void:
 		_asteroid._game = self
 		_asteroid.amount_needed_changed.connect(_on_asteroid_amount_needed_changed)
 		
-		_asteroid.initialize_amount_needed(time, get_machines_count())
+		_asteroid.initialize_amount_needed(timer_manager.time, get_machines_count())
 	
 	# Connecting signals to the UI
 	bubble_amount_changed.connect(_ui.set_bubble_count)
@@ -92,27 +91,7 @@ func game_state_to_str():
 			return "Game Over"
 
 func _process(delta: float) -> void:
-	update_time(delta)
-
-#region TIME
-func update_time(delta):
-	time += delta
-	_ui.set_timer(time)
-
-func get_time_information():
-	var msec = fmod(time, 1) * 1000
-	var sec = fmod(time, 60)
-	var minu = time / 60
-	
-	return {
-		"msec": msec,
-		"sec": sec,
-		"min": minu
-	}
-
-func reset_time():
-	time = 0.0
-#endregion
+	_ui.set_timer(timer_manager.time)
 
 #region BUBBLE
 func create_bubble(amount, lifetime):
@@ -184,7 +163,7 @@ func _on_damage_dealt(damage, total_damage):
 	_damage_hit_sfx.play()
 
 func _on_damage_limit_reached():
-	_ui.show_game_over_screen(get_time_information(), max_bubble_amount)
+	_ui.show_game_over_screen(timer_manager.get_time_information(), max_bubble_amount)
 
 func get_random_position_around_player(player_position: Vector3, radius: float) -> Vector3:
 	# Generate random spherical coordinates

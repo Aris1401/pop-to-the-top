@@ -60,7 +60,7 @@ func amount_complete():
 		_damage_timer.stop()
 
 func _on_completion_cooldown_timeout():
-	initialize_amount_needed(_game.time, _game.get_machines_count())
+	initialize_amount_needed(_game.timer_manager.time, _game.get_machines_count())
 
 func _on_limit_timer_timeout():
 	start_damage()

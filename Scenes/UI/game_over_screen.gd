@@ -19,7 +19,7 @@ func _ready() -> void:
 func set_score(time, max_bubbles):
 	var format_string = "%02d:%02d"
 	time_score.text = "Your time: " + format_string % [time.min, time.sec]
-	bubble_score.text = "Max bubble: " + var_to_str(max_bubbles)
+	bubble_score.text = "Max bubble: " + var_to_str(int(max_bubbles))
 
 func _on_retry_button_clicked():
 	request_retry.emit()

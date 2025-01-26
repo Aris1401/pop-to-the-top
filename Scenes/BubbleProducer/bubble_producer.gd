@@ -53,7 +53,10 @@ func produce():
 	change_state(BubbleProducerState.PRODUCING)
 
 func end():
-	if current_state == BubbleProducerState.IDLE || current_state == BubbleProducerState.IMPOSSIBLE_STATE:
+	if _game.current_game_state != _game.GameStates.IN_GAME:
+		return
+	
+	if (current_state != BubbleProducerState.PRODUCING):
 		change_state(BubbleProducerState.IMPOSSIBLE_STATE)
 		return
 	
@@ -81,8 +84,19 @@ func change_state(state : BubbleProducerState):
 	current_state = state
 
 func check_for_impossible_state():
+	var res = false
+	
 	if current_state == BubbleProducerState.IMPOSSIBLE_STATE:
-		change_state(BubbleProducerState.IDLE)
-		return true
-	return false
+		res = true
+	
+	change_state(BubbleProducerState.IDLE)
+	return res
+
+func get_state_str(state):
+	if state == BubbleProducerState.PRODUCING:
+		return "Producing"
+	elif state == BubbleProducerState.IDLE:
+		return "Idle"
+	elif state == BubbleProducerState.IMPOSSIBLE_STATE:
+		return "Impossible"
 #endregion

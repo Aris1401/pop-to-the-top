@@ -636,6 +636,11 @@ custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "Back to main menu"
 
+[node name="MenuSoundPlayer" parent="Pause" node_paths=PackedStringArray("parent") instance=ExtResource("18_cqvjp")]
+parent = NodePath("../MarginContainer/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer")
+button_on_hover_sound = ExtResource("19_1eb8u")
+button_on_click_sound = ExtResource("20_vhchw")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_vqjbf")
