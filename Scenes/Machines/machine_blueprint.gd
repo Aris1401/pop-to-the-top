@@ -21,11 +21,14 @@ func build(game : Game):
 	if machine_scene:
 		var machine_instance : Machine = machine_scene.instantiate()
 		machine_instance.process_mode = Node.PROCESS_MODE_PAUSABLE
+		machine_instance._game = game
+		
 		game.add_child(machine_instance)
 		
-		machine_instance.global_position = global_position
 		machine_instance.rotation_degrees = rotation_degrees
-		machine_instance._game = game
+		machine_instance.global_position = global_position
+		
+		game.placed_build.emit(machine_instance)
 	
 	queue_free()
 

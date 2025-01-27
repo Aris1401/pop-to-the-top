@@ -34,6 +34,8 @@ signal bubble_amount_changed(amount, required)
 signal request_machine_menu(machine : Machine)
 signal request_hide_machine_menu()
 
+signal placed_build(machine : Machine)
+
 func _ready() -> void:
 	if not _player:
 		for child in get_children():

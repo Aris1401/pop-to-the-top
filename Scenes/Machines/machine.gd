@@ -35,7 +35,8 @@ var last_state : MachineStates
 signal state_changed (last_sate : MachineStates, next_state : MachineStates)
 
 func _ready():
-	pass
+	if not is_in_group("Machine"):
+		add_to_group("Machine")
 
 func start_machine():
 	pass
@@ -50,9 +51,18 @@ func breakdown():
 func repair():
 	start_machine()
 
+#region Fuel
 func _on_out_of_fuel():
 	stop_machine()
 	change_state(MachineStates.OUT_OF_FUEL)
+
+func _on_refueling(amount):
+	if current_state != MachineStates.REFUELING:
+		change_state(MachineStates.REFUELING)
+
+func _on_full():
+	start_machine()
+#endregion
 
 #region State Machine
 func change_state(next_state : MachineStates):

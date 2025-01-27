@@ -81,7 +81,7 @@ data = PackedVector3Array(2.01, 1.01, 0.19, 1.01, 1.01, 0.19, 1.01, 1.01, -0.01,
 
 [node name="Level" type="Node3D"]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["Buildable"]]
 
 [node name="plateform" type="Node3D" parent="StaticBody3D"]
 

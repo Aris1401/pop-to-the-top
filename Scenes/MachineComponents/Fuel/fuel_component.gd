@@ -7,8 +7,12 @@ var _owner : Machine
 @export var fuel_max_amount : float = 100.0
 var fuel_current_amount : float = fuel_max_amount
 
+var assigned_refiller : BubbleRefiller
+
 # Signals
 signal fuel_amount_changed(amount)
+signal refueling(amount)
+signal is_full
 signal out_of_fuel
 
 func _ready() -> void:
@@ -23,6 +27,18 @@ func _ready() -> void:
 	if _owner:
 		_owner._fuel_component = self
 		out_of_fuel.connect(_owner._on_out_of_fuel)
+		refueling.connect(_owner._on_refueling)
+		is_full.connect(_owner._on_full)
+
+func refuel(amount : float):
+	fuel_current_amount += amount
+	
+	if fuel_current_amount >= fuel_max_amount:
+		fuel_current_amount = fuel_max_amount
+		is_full.emit()
+	
+	refueling.emit(fuel_current_amount)
+	fuel_amount_changed.emit(fuel_current_amount)
 
 func consume_fuel(amount : float) -> void:
 	fuel_current_amount -= amount

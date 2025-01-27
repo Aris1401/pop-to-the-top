@@ -41,6 +41,7 @@ folder_colors={
 "res://Assets/": "orange",
 "res://Scenes/": "blue",
 "res://Scenes/BubbleProducer/": "red",
+"res://Scenes/BubbleRefiller/": "red",
 "res://Scenes/MachineComponents/": "red",
 "res://Scenes/Machines/": "red"
 }

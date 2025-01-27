@@ -1,2 +1,0 @@
-extends MachineBlueprint
-class_name BubblerBlueprint

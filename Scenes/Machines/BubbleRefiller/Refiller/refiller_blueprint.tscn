@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://ypiprg4mfyv6"]
+
+[ext_resource type="Script" uid="uid://b8fa0aadgocyl" path="res://Scenes/Machines/machine_blueprint.gd" id="1_euci0"]
+[ext_resource type="PackedScene" uid="uid://c7s0wboioekx3" path="res://Scenes/Machines/BubbleRefiller/Refiller/refiller.tscn" id="2_lovjw"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_euci0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lovjw"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.330204, 0.70113, 0.914292, 0.607843)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_euci0"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.765417, 0, 0.0795272, 0.607843)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_glojh"]
+height = 1.28662
+radius = 1.07471
+
+[node name="RefillerBlueprint" type="Node3D" node_paths=PackedStringArray("_placing_area", "_valid_blueprint_mesh", "_invalid_blueprint_mesh")]
+script = ExtResource("1_euci0")
+machine_scene = ExtResource("2_lovjw")
+_placing_area = NodePath("Area3D")
+_valid_blueprint_mesh = NodePath("Node3D/Valid")
+_invalid_blueprint_mesh = NodePath("Node3D/Invalid")
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="Valid" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 0.658935, 0, 0, 0, 1, 0, 0.647651, 0)
+mesh = SubResource("CylinderMesh_euci0")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_lovjw")
+
+[node name="Invalid" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 0.658935, 0, 0, 0, 1, 0, 0.647651, 0)
+visible = false
+mesh = SubResource("CylinderMesh_euci0")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_euci0")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.665282, 0)
+shape = SubResource("CylinderShape3D_glojh")
+debug_color = Color(0.717861, 0.481212, 0, 0.42)

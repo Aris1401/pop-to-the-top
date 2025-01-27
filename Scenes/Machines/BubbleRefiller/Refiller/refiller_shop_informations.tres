@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="MachineItemShopInformation" load_steps=4 format=3 uid="uid://biwntdwrt7vyj"]
+
+[ext_resource type="PackedScene" uid="uid://ypiprg4mfyv6" path="res://Scenes/Machines/BubbleRefiller/Refiller/refiller_blueprint.tscn" id="1_6p4d0"]
+[ext_resource type="Script" uid="uid://oterb7nnmu3f" path="res://Scenes/Machines/Resources/machine_item_shop_information.gd" id="1_f7x0f"]
+[ext_resource type="Texture2D" uid="uid://b8e8xdisr5qpa" path="res://icon.svg" id="2_n5i3b"]
+
+[resource]
+script = ExtResource("1_f7x0f")
+machine_image = ExtResource("2_n5i3b")
+machine_name = "Refiller"
+machine_description = ""
+machine_bubble_price = 100.0
+machine_blueprint = ExtResource("1_6p4d0")
+metadata/_custom_type_script = ExtResource("1_f7x0f")
