@@ -31,7 +31,7 @@ var total_damage : float = 0.0
 
 # Signals
 signal bubble_amount_changed(amount, required)
-signal request_machine_menu(machine : BubbleProducer)
+signal request_machine_menu(machine : Machine)
 signal request_hide_machine_menu()
 
 func _ready() -> void:
@@ -273,7 +273,7 @@ func _on_request_ui_cancel():
 #endregion
 
 #region Machine Menu
-func _on_request_machine_menu(machine : BubbleProducer):
+func _on_request_machine_menu(machine : Machine):
 	if not machine:
 		_ui.hide_machine_menu_screen()
 	else:

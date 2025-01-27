@@ -197,7 +197,7 @@ func update_iminent_impact_timer(time):
 #endregion
 
 #region Machine Menu
-func show_machine_menu_screen(machine : BubbleProducer):
+func show_machine_menu_screen(machine : Machine):
 	_machine_menu.show()
 	_machine_menu.initialize(machine)
 	machine_menu_opened.emit()

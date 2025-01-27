@@ -81,21 +81,21 @@ _data = {
 &"damage_taken": SubResource("Animation_fevae")
 }
 
-[node name="UI" type="CanvasLayer" node_paths=PackedStringArray("_animation_player", "_bubble_count", "_timer", "_bubble_amount_progress", "_damage_progress_container", "_damage_progress", "_player_interface", "_machine_shop", "_game_over_screen", "_pause_menu_screen", "_machine_menu", "_iminent_impact_pop_up", "_iminent_impact_timer", "player_normal_controls_screen", "player_building_controls_screen")]
+[node name="UI" type="CanvasLayer" node_paths=PackedStringArray("_animation_player", "_player_interface", "_bubble_count", "_timer", "_bubble_amount_progress", "_damage_progress_container", "_damage_progress", "_iminent_impact_pop_up", "_iminent_impact_timer", "_machine_shop", "_game_over_screen", "_pause_menu_screen", "_machine_menu", "player_normal_controls_screen", "player_building_controls_screen")]
 script = ExtResource("1_de23q")
 _animation_player = NodePath("AnimationPlayer")
+_player_interface = NodePath("PlayerInterface")
 _bubble_count = NodePath("PlayerInterface/BubbleCount/MarginContainer/HBoxContainer/BubbleCount")
 _timer = NodePath("PlayerInterface/Timer/VBoxContainer/Timer")
 _bubble_amount_progress = NodePath("PlayerInterface/Timer/VBoxContainer/BubbleAmountContainer/BubbleAmountProgress")
 _damage_progress_container = NodePath("PlayerInterface/Timer/VBoxContainer/DamagerProgressContainer")
 _damage_progress = NodePath("PlayerInterface/Timer/VBoxContainer/DamagerProgressContainer/DamageProgress")
-_player_interface = NodePath("PlayerInterface")
+_iminent_impact_pop_up = NodePath("PlayerInterface/Timer/VBoxContainer/IminentImpact")
+_iminent_impact_timer = NodePath("PlayerInterface/Timer/VBoxContainer/IminentImpact/MarginContainer/VBoxContainer/IminentImpactTimer")
 _machine_shop = NodePath("MachineShop")
 _game_over_screen = NodePath("GameOver")
 _pause_menu_screen = NodePath("Pause")
 _machine_menu = NodePath("MachineMenu")
-_iminent_impact_pop_up = NodePath("PlayerInterface/Timer/VBoxContainer/IminentImpact")
-_iminent_impact_timer = NodePath("PlayerInterface/Timer/VBoxContainer/IminentImpact/MarginContainer/VBoxContainer/IminentImpactTimer")
 player_normal_controls_screen = NodePath("PlayerInterface/Controls/HBoxContainer/NormalControls")
 player_building_controls_screen = NodePath("PlayerInterface/Controls/HBoxContainer/BuildControls")
 

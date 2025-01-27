@@ -9,4 +9,6 @@ bubble_rate = 0.7
 bubble_amount = 150.0
 bubble_multiplier = 1.0
 breaking_down_probability = 2.0
+consomation_per_rate = 1.0
+max_fuel_amount = 100.0
 metadata/_custom_type_script = ExtResource("1_kesn6")

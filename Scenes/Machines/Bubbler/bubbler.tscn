@@ -203,6 +203,8 @@ _animation_player = NodePath("AnimationPlayer")
 animation_producing_name = &"working"
 animation_idle_name = &"idle"
 _rate_timer = NodePath("Timer")
+machine_name = "Bubbler"
+breaking_down_probability = 2.0
 
 [node name="BubblesVFX" parent="." instance=ExtResource("2_5wnyu")]
 transform = Transform3D(0.444666, -3.91521e-08, -0.895696, -0.895696, -1.9437e-08, -0.444666, 0, 1, -4.37114e-08, 0.452095, 1.75257, 0)

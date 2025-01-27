@@ -1,17 +1,5 @@
-extends Node3D
+extends Machine
 class_name BubbleProducer
-
-var _game : Game
-
-# Etat du producer
-enum BubbleProducerState {
-	PRODUCING,
-	IDLE,
-	IMPOSSIBLE_STATE,
-	BROKE
-}
-var current_state : BubbleProducerState = BubbleProducerState.IDLE
-var last_state : BubbleProducerState
 
 # Informations
 @export_category("Bubble Producer Informations")
@@ -28,8 +16,11 @@ var last_state : BubbleProducerState
 @export_category("References")
 @export var _rate_timer : Timer
 
-# Signals
-signal state_changed(last_state : BubbleProducerState, next_state : BubbleProducerState)
+func start_machine():
+	produce()
+
+func stop_machine():
+	end()
 
 func produce():
 	if not is_in_group("Machine"):
@@ -55,11 +46,11 @@ func produce():
 			_animation_player.play(animation_producing_name)
 	
 	# Changing the state
-	change_state(BubbleProducerState.PRODUCING)
+	change_state(MachineStates.WORKING)
 
 func end():
-	if (current_state != BubbleProducerState.PRODUCING):
-		change_state(BubbleProducerState.IMPOSSIBLE_STATE)
+	if (current_state != MachineStates.WORKING):
+		change_state(MachineStates.IMPOSSIBLE)
 		return
 	
 	_rate_timer.stop()
@@ -73,7 +64,7 @@ func end():
 	if _animation_player:
 		_animation_player.play(animation_idle_name)
 	
-	change_state(BubbleProducerState.IDLE)
+	change_state(MachineStates.IDLE)
 
 func _on_rate_timer_timeout():
 	if _game:
@@ -82,47 +73,4 @@ func _on_rate_timer_timeout():
 		if calculate_breakdown_probability():
 			breakdown()
 		else:
-			produce()
-
-func breakdown():
-	end()
-	change_state(BubbleProducerState.BROKE)
-
-func repair():
-	produce()
-
-#region StateManager
-func change_state(state : BubbleProducerState):
-	state_changed.emit(current_state, state)
-	
-	last_state = current_state
-	current_state = state
-
-func check_for_impossible_state():
-	var res = false
-	
-	if current_state == BubbleProducerState.IMPOSSIBLE_STATE:
-		res = true
-	
-	change_state(BubbleProducerState.IDLE)
-	return res
-
-func get_state_str(state):
-	if state == BubbleProducerState.PRODUCING:
-		return "Producing"
-	elif state == BubbleProducerState.IDLE:
-		return "Idle"
-	elif state == BubbleProducerState.IMPOSSIBLE_STATE:
-		return "Impossible"
-	else:
-		return "Broke"
-#endregion
-
-#region Breakdown Probability
-func calculate_breakdown_probability():
-	randomize()
-	
-	var rnd = randf()
-	
-	return false if bubble_rates.breaking_down_probability == 0 else rnd <= bubble_rates.breaking_down_probability / 100.0
-#endregion
+			start_machine()

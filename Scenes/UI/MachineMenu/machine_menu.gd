@@ -1,7 +1,7 @@
 extends Control
 class_name MachineMenu
 
-var current_machine : BubbleProducer
+var current_machine : Machine
 
 # References
 @export var _close_button : Button
@@ -16,7 +16,7 @@ func _ready() -> void:
 	_close_button.pressed.connect(_on_close_button_clicked)
 	_repair_button.pressed.connect(_on_repair_button_clicked)
 
-func initialize(machine : BubbleProducer):
+func initialize(machine : Machine):
 	if current_machine == machine:
 		return
 	
@@ -45,10 +45,10 @@ func _on_repair_button_clicked():
 		current_machine.repair()
 
 func _on_machine_state_changed(last_state, next_state):
-	if next_state == current_machine.BubbleProducerState.BROKE:
+	if next_state == current_machine.MachineStates.BROKE:
 		_repair_button.text = "Repair"
 		_repair_button.disabled = false
 	
-	if next_state == current_machine.BubbleProducerState.PRODUCING:
+	if next_state == current_machine.MachineStates.WORKING:
 		_repair_button.text = "Producing..."
 		_repair_button.disabled = true

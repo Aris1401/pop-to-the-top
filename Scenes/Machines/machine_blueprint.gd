@@ -19,7 +19,7 @@ func _ready() -> void:
 
 func build(game : Game):
 	if machine_scene:
-		var machine_instance : BubbleProducer = machine_scene.instantiate()
+		var machine_instance : Machine = machine_scene.instantiate()
 		machine_instance.process_mode = Node.PROCESS_MODE_PAUSABLE
 		game.add_child(machine_instance)
 		
