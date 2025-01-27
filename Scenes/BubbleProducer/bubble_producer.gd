@@ -17,6 +17,9 @@ class_name BubbleProducer
 @export var _rate_timer : Timer
 
 func start_machine():
+	if current_state == MachineStates.OUT_OF_FUEL:
+		return
+	
 	produce()
 
 func stop_machine():
@@ -73,4 +76,7 @@ func _on_rate_timer_timeout():
 		if calculate_breakdown_probability():
 			breakdown()
 		else:
+			if _fuel_component:
+				_fuel_component.consume_fuel(fuel_consumption_rate)
+
 			start_machine()

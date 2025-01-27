@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://b345bmt21ffk5"]
+[gd_scene load_steps=33 format=3 uid="uid://b345bmt21ffk5"]
 
 [ext_resource type="Texture2D" uid="uid://dbcglqwbo4cdy" path="res://Assets/Crosshair/crosshair.png" id="1_ahcct"]
 [ext_resource type="Script" uid="uid://bs3jwigq0yc2x" path="res://Scenes/UI/ui.gd" id="1_de23q"]
@@ -24,6 +24,7 @@
 [ext_resource type="AudioStream" uid="uid://0hkgn3my2qr3" path="res://Assets/Sounds/Menu/button-hover.mp3" id="19_1eb8u"]
 [ext_resource type="AudioStream" uid="uid://dkkpu4iolscqk" path="res://Assets/Sounds/Menu/button-click.mp3" id="20_vhchw"]
 [ext_resource type="Script" uid="uid://b3w2gm0rd8px0" path="res://Scenes/UI/Pause/pause.gd" id="23_vhchw"]
+[ext_resource type="Texture2D" uid="uid://c07ldmbdt04fv" path="res://Assets/Kenney/Default/button_square_gradient.png" id="24_l5iwa"]
 [ext_resource type="Script" uid="uid://cu5jxhe45ltvn" path="res://Scenes/UI/MachineMenu/machine_menu.gd" id="25_rdq6y"]
 
 [sub_resource type="Gradient" id="Gradient_t7te2"]
@@ -485,7 +486,7 @@ parent = NodePath("../MarginContainer/Panel/MarginContainer/VBoxContainer/BoxCon
 button_on_hover_sound = ExtResource("19_1eb8u")
 button_on_click_sound = ExtResource("20_vhchw")
 
-[node name="MachineMenu" type="Control" parent="." node_paths=PackedStringArray("_close_button", "_repair_button", "_machine_name_label")]
+[node name="MachineMenu" type="Control" parent="." node_paths=PackedStringArray("_close_button", "_repair_button", "_fuel_bar", "_machine_name_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -496,6 +497,7 @@ theme = ExtResource("2_mbl0m")
 script = ExtResource("25_rdq6y")
 _close_button = NodePath("MarginContainer/VBoxContainer/CloseButton")
 _repair_button = NodePath("MarginContainer/VBoxContainer/NinePatchRect/MarginContainer/VBoxContainer/RepairButton")
+_fuel_bar = NodePath("MarginContainer/VBoxContainer/NinePatchRect/MarginContainer/VBoxContainer/FuelBar")
 _machine_name_label = NodePath("MarginContainer/VBoxContainer/NinePatchRect/MarginContainer/VBoxContainer/MachineName")
 
 [node name="MarginContainer" type="MarginContainer" parent="MachineMenu"]
@@ -550,6 +552,19 @@ theme_override_fonts/font = ExtResource("11_h6tq4")
 theme_override_font_sizes/font_size = 18
 text = "Machine name"
 uppercase = true
+
+[node name="FuelBar" type="TextureProgressBar" parent="MachineMenu/MarginContainer/VBoxContainer/NinePatchRect/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+value = 100.0
+nine_patch_stretch = true
+stretch_margin_left = 5
+stretch_margin_top = 5
+stretch_margin_right = 5
+stretch_margin_bottom = 5
+texture_under = ExtResource("24_l5iwa")
+texture_progress = ExtResource("24_l5iwa")
+tint_progress = Color(0.328564, 0.60894, 1, 1)
 
 [node name="RepairButton" type="Button" parent="MachineMenu/MarginContainer/VBoxContainer/NinePatchRect/MarginContainer/VBoxContainer"]
 layout_mode = 2

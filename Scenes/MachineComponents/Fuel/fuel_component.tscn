@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://be12tka3jhnj8"]
+
+[ext_resource type="Script" uid="uid://dmsbw53t2ctbd" path="res://Scenes/MachineComponents/Fuel/fuel_component.gd" id="1_ac201"]
+
+[node name="FuelComponent" type="Node"]
+script = ExtResource("1_ac201")

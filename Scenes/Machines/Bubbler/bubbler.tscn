@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://baey0snu61qk3"]
+[gd_scene load_steps=22 format=4 uid="uid://baey0snu61qk3"]
 
 [ext_resource type="Script" uid="uid://cowqqhnfujbhm" path="res://Scenes/Machines/Bubbler/bubbler.gd" id="1_4jpa8"]
 [ext_resource type="PackedScene" uid="uid://d3t03ohoukenl" path="res://Scenes/VFX/Bubbles/bubbles_vfx.tscn" id="2_5wnyu"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dejflc7t2wp5" path="res://Assets/Bubbler/bb_texture.png" id="4_rx886"]
 [ext_resource type="Texture2D" uid="uid://cak25y0gwupto" path="res://Assets/Bubbler/bb_fan.png" id="5_g2y6k"]
 [ext_resource type="PackedScene" uid="uid://duf7tmtkucntq" path="res://Scenes/Interaction/interactible_component.tscn" id="6_g2y6k"]
+[ext_resource type="PackedScene" uid="uid://be12tka3jhnj8" path="res://Scenes/MachineComponents/Fuel/fuel_component.tscn" id="7_l77v8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rx886"]
 resource_name = "BB_Body_Material"
@@ -204,7 +205,7 @@ animation_producing_name = &"working"
 animation_idle_name = &"idle"
 _rate_timer = NodePath("Timer")
 machine_name = "Bubbler"
-breaking_down_probability = 2.0
+fuel_consumption_rate = 2.0
 
 [node name="BubblesVFX" parent="." instance=ExtResource("2_5wnyu")]
 transform = Transform3D(0.444666, -3.91521e-08, -0.895696, -0.895696, -1.9437e-08, -0.444666, 0, 1, -4.37114e-08, 0.452095, 1.75257, 0)
@@ -249,6 +250,8 @@ max_distance = 5.0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractibleComponent"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0218201, 1.04537, -0.00665283)
 shape = SubResource("BoxShape3D_l77v8")
+
+[node name="FuelComponent" parent="." instance=ExtResource("7_l77v8")]
 
 [connection signal="interacted" from="InteractibleComponent" to="." method="_on_interactible_component_interacted"]
 [connection signal="is_out_of_range" from="InteractibleComponent" to="." method="_on_interactible_component_is_out_of_range"]

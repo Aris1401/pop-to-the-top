@@ -250,6 +250,8 @@ func _on_pause_menu_opened():
 
 func _on_pause_menu_closed():
 	current_game_state = GameStates.IN_GAME
+
+	get_tree().paused = false
 	
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 #endregion

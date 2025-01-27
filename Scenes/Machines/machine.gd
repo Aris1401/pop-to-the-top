@@ -11,16 +11,25 @@ var _game : Game
 @export_subgroup("Breaking Down")
 @export var breaking_down_probability : float = 0.0
 
+# Fuel Consumption
+@export_subgroup("Fuel Consumption")
+@export var fuel_consumption_rate : float = 0.0
+
 # State Machine
 enum MachineStates {
 	IDLE,
 	WORKING,
 	IMPOSSIBLE,
-	BROKE
+	BROKE,
+	OUT_OF_FUEL,
+	REFUELING
 }
 
 var current_state : MachineStates = MachineStates.IDLE
 var last_state : MachineStates
+
+# Components
+@export var _fuel_component : FuelComponent
 
 # Signal 
 signal state_changed (last_sate : MachineStates, next_state : MachineStates)
@@ -41,6 +50,10 @@ func breakdown():
 func repair():
 	start_machine()
 
+func _on_out_of_fuel():
+	stop_machine()
+	change_state(MachineStates.OUT_OF_FUEL)
+
 #region State Machine
 func change_state(next_state : MachineStates):
 	state_changed.emit(current_state, next_state)
@@ -55,6 +68,10 @@ func get_state_str(state):
 		return "Idle"
 	elif state == MachineStates.IMPOSSIBLE:
 		return "Impossible"
+	elif state == MachineStates.OUT_OF_FUEL:
+		return "Out of Fuel"
+	elif state == MachineStates.REFUELING:
+		return "Refueling"
 	else:
 		return "Broke"
 
