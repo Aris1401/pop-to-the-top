@@ -4,33 +4,35 @@ class_name UI
 @export var _animation_player : AnimationPlayer
 
 # References
+@export_subgroup("Player Interface")
+@export var _player_interface : Control
 @export var _bubble_count : Label
 @export var _timer : Label 
 
 @export var _bubble_amount_progress : TextureProgressBar
 
 # Damage
+@export_subgroup("Damage")
 @export var _damage_progress_container : MarginContainer
 @export var _damage_progress : TextureProgressBar
-
-# Player Interface
-@export var _player_interface : Control
+@export var _iminent_impact_pop_up : NinePatchRect
+@export var _iminent_impact_timer : Label
 
 # Machine shop
+@export_subgroup("Machine Shop")
 @export var _machine_shop : MachineShop
 
 # Game Over
+@export_subgroup("Game Over")
 @export var _game_over_screen : GameOverScreen
 
 # Pause menu
+@export_subgroup("Pause")
 @export var _pause_menu_screen : PauseMenu
 
 # Machine menu
+@export_subgroup("Machine Menu")
 @export var _machine_menu : MachineMenu
-
-# Iminent impact pop up
-@export var _iminent_impact_pop_up : NinePatchRect
-@export var _iminent_impact_timer : Label
 
 # ------ Controls
 @export_category("Player Controls")
