@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BaseBubbleRates" load_steps=2 format=3 uid="uid://bfrgkt4lnaqbf"]
 
-[ext_resource type="Script" uid="uid://dqdttkelm3q27" path="res://Scenes/BubbleInformations/base_bubble_rates.gd" id="1_ah4md"]
+[ext_resource type="Script" uid="uid://dqdttkelm3q27" path="res://Scenes/BubbleProducer/Resources/base_bubble_rates.gd" id="1_ah4md"]
 
 [resource]
 script = ExtResource("1_ah4md")

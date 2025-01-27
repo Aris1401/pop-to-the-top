@@ -16,7 +16,6 @@ var last_state : BubbleProducerState
 # Informations
 @export_category("Bubble Producer Informations")
 @export var bubble_rates : BaseBubbleRates
-@export var breakdown_probability : float = 0.0
 @export_subgroup("FX")
 @export var bubble_vfx : BubbleVFX
 @export var bubble_sfx : AudioStreamPlayer3D
@@ -81,10 +80,13 @@ func _on_rate_timer_timeout():
 		_game.create_bubble(bubble_rates.bubble_amount * bubble_rates.bubble_multiplier, 10)
 		
 		if calculate_breakdown_probability():
-			end()
-			change_state(BubbleProducerState.BROKE)
+			breakdown()
 		else:
 			produce()
+
+func breakdown():
+	end()
+	change_state(BubbleProducerState.BROKE)
 
 func repair():
 	produce()
@@ -122,5 +124,5 @@ func calculate_breakdown_probability():
 	
 	var rnd = randf()
 	
-	return false if breakdown_probability == 0 else rnd <= breakdown_probability / 100.0
+	return false if bubble_rates.breaking_down_probability == 0 else rnd <= bubble_rates.breaking_down_probability / 100.0
 #endregion

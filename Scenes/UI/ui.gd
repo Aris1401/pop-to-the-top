@@ -202,5 +202,6 @@ func show_machine_menu_screen(machine : BubbleProducer):
 
 func hide_machine_menu_screen():
 	_machine_menu.hide()
+	_machine_menu.try_disconnect()
 	machine_menu_closed.emit()
 #endregion

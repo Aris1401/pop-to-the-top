@@ -39,7 +39,9 @@ enabled=PackedStringArray("res://addons/imgui-godot/plugin.cfg", "res://addons/s
 
 folder_colors={
 "res://Assets/": "orange",
-"res://Scenes/": "blue"
+"res://Scenes/": "blue",
+"res://Scenes/BubbleProducer/": "red",
+"res://Scenes/Machines/": "red"
 }
 
 [global_group]

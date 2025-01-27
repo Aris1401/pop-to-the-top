@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="BaseBubbleRates" load_steps=2 format=3 uid="uid://b8j0j7x85fyhl"]
+[gd_resource type="Resource" script_class="BaseBubbleRates" load_steps=2 format=3 uid="uid://bboxl2l8nrl77"]
 
-[ext_resource type="Script" uid="uid://dqdttkelm3q27" path="res://Scenes/BubbleInformations/base_bubble_rates.gd" id="1_kesn6"]
+[ext_resource type="Script" uid="uid://dqdttkelm3q27" path="res://Scenes/BubbleProducer/Resources/base_bubble_rates.gd" id="1_kesn6"]
 
 [resource]
 script = ExtResource("1_kesn6")
@@ -8,4 +8,5 @@ name = "Bubbler"
 bubble_rate = 0.7
 bubble_amount = 150.0
 bubble_multiplier = 1.0
+breaking_down_probability = 2.0
 metadata/_custom_type_script = ExtResource("1_kesn6")

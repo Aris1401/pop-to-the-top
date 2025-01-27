@@ -24,21 +24,21 @@ func initialize(machine : BubbleProducer):
 	
 	_machine_name_label.text = current_machine.bubble_rates.name
 	
-	if current_machine.current_state != current_machine.BubbleProducerState.BROKE:
-		_repair_button.text = "Producing..."
-		_repair_button.disabled = true
+	_on_machine_state_changed(null, current_machine.current_state)
 	
 	current_machine.state_changed.connect(_on_machine_state_changed)
 	
 	set_process(true)
 
-func _on_close_button_clicked():
-	request_close.emit()
-	
-	current_machine.state_changed.disconnect(_on_machine_state_changed)
-	current_machine = null
+func try_disconnect():
+	if current_machine:
+		current_machine.state_changed.disconnect(_on_machine_state_changed)
+		current_machine = null
 	
 	set_process(false)
+
+func _on_close_button_clicked():
+	request_close.emit()
 
 func _on_repair_button_clicked():
 	if current_machine:

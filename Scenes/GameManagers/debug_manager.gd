@@ -8,6 +8,9 @@ func _process(delta: float) -> void:
 	
 	ImGui.Text("Game State: " + _game.game_state_to_str())
 	
+	if (ImGui.Button("Reset Game")):
+		get_tree().reload_current_scene()
+	
 	ImGui.Text("Damage")
 	if (not _game.damage_manager.immunity and ImGui.Button("Disable Damage")):
 		_game.damage_manager.immunity = true
@@ -20,6 +23,7 @@ func _process(delta: float) -> void:
 	
 	if (ImGui.Button("End Game")):
 		_game.damage_manager.do_damage(1000)
+	
 	
 	ImGui.Text("Bubbles")
 	if (ImGui.Button("+100000 Bubbles")):

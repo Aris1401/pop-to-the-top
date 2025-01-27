@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cdvr7ex86qbqg" path="res://Assets/Icons/bubble_icon.png" id="4_56q1t"]
 [ext_resource type="Texture2D" uid="uid://dw6t6a8qmel1x" path="res://Assets/Kenney/Green/Default/bar_round_gloss_large_m.png" id="4_alcrr"]
 [ext_resource type="Script" uid="uid://caw4t7t20r6e" path="res://Scenes/UI/MachineShop/machine_shop.gd" id="5_alcrr"]
-[ext_resource type="Script" uid="uid://oterb7nnmu3f" path="res://Scenes/ShopInformations/machine_item_shop_information.gd" id="6_duuxe"]
+[ext_resource type="Script" uid="uid://oterb7nnmu3f" path="res://Scenes/Machines/Resources/machine_item_shop_information.gd" id="6_duuxe"]
 [ext_resource type="Resource" uid="uid://burtydbwalxag" path="res://Scenes/Machines/Bubbler/bubbler_shop_information.tres" id="7_jfwrg"]
 [ext_resource type="Texture2D" uid="uid://crs5pkwcl1ffr" path="res://Assets/Icons/bubble_shop.png" id="8_fevae"]
 [ext_resource type="Texture2D" uid="uid://cqcjpf6eap4g8" path="res://Assets/Kenney/Default/button_square_border.png" id="8_jx4bj"]

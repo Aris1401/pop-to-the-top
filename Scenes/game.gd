@@ -32,6 +32,7 @@ var total_damage : float = 0.0
 # Signals
 signal bubble_amount_changed(amount, required)
 signal request_machine_menu(machine : BubbleProducer)
+signal request_hide_machine_menu()
 
 func _ready() -> void:
 	if not _player:
@@ -81,6 +82,7 @@ func _ready() -> void:
 	
 	# MACHINE MENU
 	request_machine_menu.connect(_on_request_machine_menu)
+	request_hide_machine_menu.connect(_on_request_hide_machine_menu)
 	
 	_ui.machine_menu_opened.connect(_on_machine_menu_opened)
 	_ui.machine_menu_closed.connect(_on_machine_menu_closed)
@@ -276,6 +278,10 @@ func _on_request_machine_menu(machine : BubbleProducer):
 		_ui.hide_machine_menu_screen()
 	else:
 		_ui.show_machine_menu_screen(machine)
+
+func _on_request_hide_machine_menu():
+	if current_game_state == GameStates.IN_MACHINE_MENU:
+		_ui.hide_machine_menu_screen()
 
 func _on_machine_menu_opened():
 	_ui.hide_shop()
